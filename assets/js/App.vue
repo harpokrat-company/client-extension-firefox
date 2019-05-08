@@ -1,5 +1,5 @@
 <template>
-  <div>Initial Commit</div>
+  <router-view/>
 </template>
 
 
