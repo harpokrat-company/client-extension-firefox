@@ -1,0 +1,12 @@
+image: node:9.4.0
+
+before_script:
+  - yarn install
+
+build:
+  script:
+    - yarn run build
+  cache:
+    paths:
+    - node_modules/
+    - .yarn
