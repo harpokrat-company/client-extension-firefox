@@ -10,3 +10,11 @@ build:
     paths:
     - node_modules/
     - .yarn
+
+test:
+  script:
+    - yarn run test
+  cache:
+    paths:
+    - node_modules/
+    - .yarn
