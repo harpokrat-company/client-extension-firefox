@@ -16,7 +16,7 @@
             "128": "assets/img/icon128.png"
         },
 	"default_title": "Opens myextension",
-	"default_popup": "app.html"
+	"default_popup": "./dist/index.html"
     },
     "permissions": ["tabs"]
 }
