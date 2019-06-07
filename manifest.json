@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "name": "HarpokratVue",
+    "name": "Harpokrat",
     "version": "1.0.0",
     "icons": {
 	"16": "assets/img/icon16.png",
@@ -18,5 +18,14 @@
 	"default_title": "Opens myextension",
 	"default_popup": "./dist/index.html"
     },
-    "permissions": ["tabs"]
+    "background": {
+        "scripts": ["background/background.js"]
+    },
+    "content_scripts": [
+        {
+            "matches": ["http://*/*", "https://*/*", "file://*/*"],
+            "js": ["content_scripts/find_fields.js", "content_scripts/new_pass.js", "content_scripts/find_pass.js"]
+        }
+    ],
+    "permissions": ["activeTab", "storage", "tabs"]
 }
