@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
-import { HomepageComponent } from './homepage/homepage.component';
+import { PasswordCollectionComponent } from './password-collection/password-collection.component';
+import { TestsComponent } from './tests/tests.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'homepage', component: HomepageComponent },
+  { path: 'tests', component: TestsComponent },
+  { path: 'homepage', component: PasswordCollectionComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
 
