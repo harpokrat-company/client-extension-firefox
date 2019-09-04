@@ -30,18 +30,18 @@ const create_new_pass_modal = (username, password) => {
     btnConfirm.onclick = function() {
 	let mo = document.getElementById('harpokratModal');
 	mo.style.display = "none";
-	chrome.runtime.sendMessage({add_account: {user: username, pass: password}}, (response) => {
+	send_webext_message("add_account", {user: username, pass: password}, (response) => {
             console.log(response)
         })
-	chrome.runtime.sendMessage({delete_pending_account: {user: username, pass: password}}, (response) => {
-            console.log(response)
+	send_webext_message("delete_pending_account", {user: username, pass: password}, (response) => {
+	    console.log(response)
         })
     }
 
     btnRefuse.onclick = function() {
 	let mo = document.getElementById('harpokratModal');
 	mo.style.display = "none";
-	chrome.runtime.sendMessage({delete_pending_account: {user: username, pass: password}}, (response) => {
+	send_webext_message("delete_pending_account", {user: username, pass: password}, (response) => {
             console.log(response)
         })
     }
@@ -57,7 +57,7 @@ const create_new_pass_modal = (username, password) => {
 const new_pass = () => {
     let fields = find_fields()
 
-    chrome.runtime.sendMessage({is_account_pending: true}, (response) => {
+    send_webext_message("is_account_pending", true, (response) => {
         if (response.success == true)
 	    create_new_pass_modal(response.user, response.pass)
     })
@@ -65,7 +65,7 @@ const new_pass = () => {
         console.log(JSON.stringify(fields))
         fields.form.addEventListener("submit", () => {
             let account = {user: fields.user.value, pass: fields.pass.value}
-            chrome.runtime.sendMessage({add_pending_account: account}, (response) => {
+            send_webext_message("add_pending_account", account, (response) => {
                 console.log(response)
             })
         })

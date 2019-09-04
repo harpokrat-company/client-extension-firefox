@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Password } from '../password'
+import { sendWebExtMessage } from '../webext-messaging'
 
 @Component({
   selector: 'app-password-collection',
@@ -11,6 +12,11 @@ export class PasswordCollectionComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    sendWebExtMessage("aled", {}, (res) => {
+      if (res.success) {
+        alert("successfully talked with background script")
+      }
+    })
   }
 
   // Data Mockup

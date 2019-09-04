@@ -55,7 +55,7 @@ const find_pass = () => {
         // create datalist of user accounts
         let user_datalist = document.createElement('datalist')
         user_datalist.setAttribute("id", "accounts")
-        chrome.runtime.sendMessage({accounts: true}, function (res) {
+        send_webext_message("accounts", {}, function (res) {
             let accounts = res.accounts
             for (let i of accounts) {
                 let op = document.createElement('option')
@@ -67,7 +67,7 @@ const find_pass = () => {
             // set list in place of username input
             user_field.setAttribute("list", "accounts")
             user_field.oninput = function() {
-                chrome.runtime.sendMessage({get_pass: {user: user_field.value}}, function (res) {
+                send_webext_message("get_pass", {user: user_field.value}, function (res) {
                     console.log(JSON.stringify(res))
                     if (res.success)
                         pass_field.value = res.pass
@@ -76,7 +76,7 @@ const find_pass = () => {
 
             // add modal for completion
             if (accounts.length > 0) {
-                chrome.runtime.sendMessage({get_pass: {user: accounts[0]}}, function (res) {
+                send_webext_message("get_pass", {user: accounts[0]}, function (res) {
                     if (res.success) {
                         create_fill_pass_modal(accounts[0], res.pass, fields)
                     }

@@ -21,7 +21,6 @@ function find_fields_fb () {
     let i = 0
     while (ret.user.getAttribute("type") == 'hidden')
         ret.user = ret.form[++i]
-    console.log(i)
     return ret
 }
 
