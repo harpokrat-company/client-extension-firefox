@@ -31,4 +31,29 @@ export class PasswordCollectionComponent implements OnInit {
       "password": "azerty-twitter"
     },
   ]
+
+  alphabeticalOrder: boolean = false;
+
+  addPassword() {
+    this.passwords.push({
+      "url": "added.com",
+      "username": "qwerty",
+      "password": "azerty-Youtube"
+    });
+  }
+
+  removePassword() {
+    this.passwords.pop();
+  }
+
+  orderPassword() {
+    this.passwords.sort((a: Password, b: Password) => {
+      if (a.url > b.url) {
+        return this.alphabeticalOrder ? -1 : 1;
+      }
+      return this.alphabeticalOrder ? 1 : -1;
+    })
+    this.alphabeticalOrder = !this.alphabeticalOrder;
+    return 0;
+  }
 }
