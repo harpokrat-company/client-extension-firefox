@@ -21,10 +21,10 @@ chrome.runtime.onInstalled.addListener(function() {
 ***********************************/
 
 const add_message_type = (message_type, handler) => {
-    console.log(message_type)
+    // console.log(message_type)
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	if (request.message_type == message_type) {
-	    console.log(message_type + " => " + JSON.stringify(request))
+	    // console.log(message_type + " => " + JSON.stringify(request))
 	    return handler(request.params, sender, sendResponse)
 	}
     })
@@ -45,6 +45,27 @@ add_message_type("get_pass", (params, sender, sendResponse) => {
 })
 
 // read placeholder account storage for usernames
+add_message_type("popup_current_url_accounts", (params, sender, sendResponse) => {
+    // console.log(JSON.stringify(sender))
+    // let sender_url = new URL(sender.tab.url)
+    chrome.storage.local.get(['acc_list'], function(res) {
+	let accounts = res.acc_list.filter(function (i) {
+	    // return i.host == sender_url.host
+	    return true
+	}).map(i => {
+	    return {
+		"url": i.host,
+		"username": i.user,
+		"password": i.pass
+	    }
+	})
+	sendResponse({success: true, accounts})
+	return;
+    })
+    return true;
+})
+
+// read placeholder account storage for usernames
 add_message_type("accounts", (params, sender, sendResponse) => {
     let sender_url = new URL(sender.tab.url)
     chrome.storage.local.get(['acc_list'], function(res) {
@@ -60,6 +81,9 @@ add_message_type("accounts", (params, sender, sendResponse) => {
 // add a new account, after receiving confirmation from a modal
 add_message_type("add_account", (params, sender, sendResponse) => {
     let sender_url = new URL(sender.tab.url)
+    if (sender_url.host == "") {
+	sender_url = new URL("http://localhost")
+    }
     let pass = params.pass
     let user = params.user
     console.log(sender_url.host + " sent account: " + pass)

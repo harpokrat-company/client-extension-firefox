@@ -9,34 +9,47 @@ import { sendWebExtMessage } from '../webext-messaging'
 })
 export class PasswordCollectionComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
-    sendWebExtMessage("aled", {}, (res) => {
+    sendWebExtMessage("popup_current_url_accounts", {}, (res) => {
       if (res.success) {
-        alert("successfully talked with background script")
+        if (res.accounts.length != 0) {
+          this.passwords = []
+          for (let i of res.accounts) {
+            this.passwords.push({
+              "url": i.url,
+              "username": i.username,
+              "password": i.password
+            })
+          }
+        }
       }
     })
+    if (this.passwords.length == 0) {
+      this.passwords = [
+        {
+          "url": "youtube.com",
+          "username": "qwerty",
+          "password": "azerty-Youtube"
+        },
+        {
+          "url": "gmail.com",
+          "username": "qwerty",
+          "password": "azerty-gmail"
+        },
+        {
+          "url": "twitter.com",
+          "username": "qwerty",
+          "password": "azerty-twitter"
+        },
+      ]
+    }
   }
 
   // Data Mockup
-  passwords: Password[] = [
-    {
-      "url": "youtube.com",
-      "username": "qwerty",
-      "password": "azerty-Youtube"
-    },
-    {
-      "url": "gmail.com",
-      "username": "qwerty",
-      "password": "azerty-gmail"
-    },
-    {
-      "url": "twitter.com",
-      "username": "qwerty",
-      "password": "azerty-twitter"
-    },
-  ]
+  passwords: Password[] = []
 
   alphabeticalOrder: boolean = false;
 
