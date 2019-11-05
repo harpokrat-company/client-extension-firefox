@@ -10,6 +10,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { PasswordComponent } from './password/password.component';
 import { TestsComponent } from './tests/tests.component';
 import { PasswordCollectionComponent } from './password-collection/password-collection.component';
+import { HarpokratModule } from '@harpokrat/api';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,13 @@ import { PasswordCollectionComponent } from './password-collection/password-coll
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HarpokratModule.forRoot(
+      'https://api.harpokrat.com:443/v1',
+      {
+        loginRouterPath: '/login'
+      }
+    ),
   ],
   providers: [],
   bootstrap: [AppComponent]
