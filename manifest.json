@@ -24,7 +24,7 @@
     "content_scripts": [
         {
             "matches": ["http://*/*", "https://*/*", "file://*/*"],
-            "js": ["content_scripts/send_message.js","content_scripts/find_fields.js", "content_scripts/new_pass.js", "content_scripts/find_pass.js"]
+            "js": ["content_scripts/send_message.js","content_scripts/new_find_fields.js", "content_scripts/new_pass.js", "content_scripts/find_pass.js"]
         }
     ],
     "permissions": ["activeTab", "storage", "tabs"]
