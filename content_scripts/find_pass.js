@@ -1,3 +1,12 @@
+
+// This file searches for a login form in the current website
+// If it finds one, it will query the background script for an
+// account to autofill. If it receives any, it will display a modal
+// to the user to ask if the form should be auto-filled, and if yes is
+// answered, finally fill it
+
+
+
 const create_fill_pass_modal = (username, password, fields) => {
     let link = document.createElement("LINK");
     link.href = "https://fonts.googleapis.com/css?family=Montserrat"
@@ -30,8 +39,8 @@ const create_fill_pass_modal = (username, password, fields) => {
     btnConfirm.onclick = function() {
 	let mo = document.getElementById('harpokratFillModal');
 	mo.style.display = "none";
-        fields.user.value = username
-        fields.pass.value = password
+	fields.user.value = username
+	fields.pass.value = password
     }
 
     btnRefuse.onclick = function() {
@@ -52,44 +61,44 @@ const find_pass = () => {
     let user_field = fields.user
     let pass_field = fields.pass
     if (user_field && pass_field) {
-        // create datalist of user accounts
-        let user_datalist = document.createElement('datalist')
-        user_datalist.setAttribute("id", "accounts")
-        send_webext_message("accounts", {}, function (res) {
-            let accounts = res.accounts
-            for (let i of accounts) {
-                let op = document.createElement('option')
-                op.value = i
-                user_datalist.appendChild(op)
-            }
-            user_field.parentNode.appendChild(user_datalist)
+	// create datalist of user accounts
+	let user_datalist = document.createElement('datalist')
+	user_datalist.setAttribute("id", "accounts")
+	send_webext_message("accounts", {}, function (res) {
+	    let accounts = res.accounts
+	    for (let i of accounts) {
+		let op = document.createElement('option')
+		op.value = i
+		user_datalist.appendChild(op)
+	    }
+	    user_field.parentNode.appendChild(user_datalist)
 
-            // set list in place of username input
-            user_field.setAttribute("list", "accounts")
-            user_field.oninput = function() {
-                send_webext_message("get_pass", {user: user_field.value}, function (res) {
-                    console.log(JSON.stringify(res))
-                    if (res.success)
-                        pass_field.value = res.pass
-                })
-            }
+	    // set list in place of username input
+	    user_field.setAttribute("list", "accounts")
+	    user_field.oninput = function() {
+		send_webext_message("get_pass", {user: user_field.value}, function (res) {
+		    console.log(JSON.stringify(res))
+		    if (res.success)
+			pass_field.value = res.pass
+		})
+	    }
 
-            // add modal for completion
-            if (accounts.length > 0) {
-                send_webext_message("get_pass", {user: accounts[0]}, function (res) {
-                    if (res.success) {
-                        create_fill_pass_modal(accounts[0], res.pass, fields)
-                    }
-                })
-            }
-        })
-        chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-            if (request.fill_account) {
-                user_field.value = request.fill_account.user
-                pass_field.value = request.fill_account.pass
-                sendResponse({success: true})
-            }
-        })
+	    // add modal for completion
+	    if (accounts.length > 0) {
+		send_webext_message("get_pass", {user: accounts[0]}, function (res) {
+		    if (res.success) {
+			create_fill_pass_modal(accounts[0], res.pass, fields)
+		    }
+		})
+	    }
+	})
+	chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+	    if (request.fill_account) {
+		user_field.value = request.fill_account.user
+		pass_field.value = request.fill_account.pass
+		sendResponse({success: true})
+	    }
+	})
     }
 }
 find_pass()
