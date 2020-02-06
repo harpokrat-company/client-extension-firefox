@@ -1,111 +1,324 @@
-function find_fields_fb () {
+
+// this file contains the different form reading function, linked in
+// the end of the file
+
+
+function find_fields_ebay () {
     let ret = {
-        form: undefined,
-        user: undefined,
-        pass: undefined
+	form: undefined,
+	user: undefined,
+	pass: undefined
     }
-    ret.form = document.forms[0]
-    ret.user = document.querySelectorAll("input[name='username']")[0]
-    ret.pass = document.querySelectorAll("input[type='password']")[0]
-    if (!(ret.user) && ret.form && ret.form.length > 0) {
-        ret.user = ret.form[0]
-    }
-    if (!(ret.user))
-        return ret
-    let i = 0
-    while (ret.user && ret.user.getAttribute("type") == 'hidden')
-        ret.user = ret.form[++i]
+    ret.form = document.querySelectorAll("form[id='SignInForm']")[0]
+    ret.user = ret.form.querySelectorAll("input[id='userid']")[0]
+    ret.pass = ret.form.querySelectorAll("input[id='pass']")[0]
     return ret
 }
 
 function find_fields_wiki () {
     let ret = {
-        form: undefined,
-        user: undefined,
-        pass: undefined
+	form: undefined,
+	user: undefined,
+	pass: undefined
     }
-    ret.form = document.forms[0]
-    ret.user = document.querySelectorAll("input[name='username']")[0]
-    ret.pass = document.querySelectorAll("input[type='password']")[0]
-    if (!(ret.user) && ret.form && ret.form.length > 0) {
-        ret.user = ret.form[0]
-    }
-    if (!(ret.user))
-        return ret
-    let i = 0
-    while (ret.user && ret.user.getAttribute("type") == 'hidden')
-        ret.user = ret.form[++i]
-    return ret
-}
-
-function find_fields_ebay () {
-    let ret = {
-        form: undefined,
-        user: undefined,
-        pass: undefined
-    }
-    ret.form = document.forms[0]
-    ret.user = document.querySelectorAll("input[name='username']")[0]
-    ret.pass = document.querySelectorAll("input[type='password']")[0]
-    if (!(ret.user) && ret.form && ret.form.length > 0) {
-        ret.user = ret.form[0]
-    }
-    if (!(ret.user))
-        return ret
-    let i = 0
-    while (ret.user && ret.user.getAttribute("type") == 'hidden')
-        ret.user = ret.form[++i]
+    ret.form = document.querySelectorAll("form[name='userlogin']")[0]
+    ret.user = ret.form.querySelectorAll("input[id='wpName1']")[0]
+    ret.pass = ret.form.querySelectorAll("input[id='wpPassword1']")[0]
     return ret
 }
 
 function find_fields_twitter () {
     let ret = {
-        form: undefined,
-        user: undefined,
-        pass: undefined
+	form: undefined,
+	user: undefined,
+	pass: undefined
     }
-    ret.form = document.forms[0]
-    /* ret.form = document.forms[3] */
-    ret.user = document.querySelectorAll("input[name='session[username_or_email]']")[0]
-    ret.pass = document.querySelectorAll("input[name='session[password]']")[0]
-    if (!(ret.user) && ret.form && ret.form.length > 0) {
-	ret.user = ret.form[0]
-    }
-    if (!(ret.user))
-        return ret
-    let i = 0
-    while (ret.user && ret.user.getAttribute("type") == 'hidden')
-        ret.user = ret.form[++i]
+    ret.form = document.forms[2]
+    ret.user = ret.form.querySelectorAll("input[name='session[username_or_email]']")[0]
+    ret.pass = ret.form.querySelectorAll("input[name='session[password]']")[0]
     return ret
 }
 
-function find_fields_stackoverflow () {
+function find_fields_fb () {
     let ret = {
-        form: undefined,
-        user: undefined,
-        pass: undefined
+	form: undefined,
+	user: undefined,
+	pass: undefined
     }
-    ret.form = document.forms[1]
-    ret.user = document.querySelectorAll("input[name='email']")[0]
-    ret.pass = document.querySelectorAll("input[type='password']")[0]
-    // alert(JSON.stringify(ret))
+    ret.form = document.querySelectorAll("form[id='login_form']")[0]
+    ret.user = ret.form.querySelectorAll("input[id='email']")[0]
+    ret.pass = ret.form.querySelectorAll("input[id='pass']")[0]
     return ret
 }
+
+function find_fields_trello () {
+    let ret = {
+	form: undefined,
+	user: undefined,
+	pass: undefined
+    }
+    ret.form = document.querySelectorAll("form[id='login-form']")[0]
+    ret.user = ret.form.querySelectorAll("input[id='user']")[0]
+    ret.pass = ret.form.querySelectorAll("input[id='password']")[0]
+    // alert("aled")
+    return ret
+}
+
+function find_fields_gitlab () {
+    let ret = {
+	form: undefined,
+	user: undefined,
+	pass: undefined
+    }
+    ret.form = document.querySelectorAll("form[id='new_user']")[0]
+    ret.user = ret.form.querySelectorAll("input[id='user_login']")[0]
+    ret.pass = ret.form.querySelectorAll("input[id='user_password']")[0]
+    return ret
+}
+
+function find_fields_github () {
+    let ret = {
+	form: undefined,
+	user: undefined,
+	pass: undefined
+    }
+    ret.form = document.forms[0]
+    ret.user = ret.form.querySelectorAll("input[id='login_field']")[0]
+    ret.pass = ret.form.querySelectorAll("input[id='password']")[0]
+    return ret
+}
+
+function find_fields_ratp () {
+    let ret = {
+	form: undefined,
+	user: undefined,
+	pass: undefined
+    }
+    ret.form = document.querySelectorAll("form[id='user-login']")[0]
+    ret.user = ret.form.querySelectorAll("input[name='name']")[0]
+    ret.pass = ret.form.querySelectorAll("input[name='pass']")[0]
+    return ret
+}
+
+function find_fields_slack () {
+    let ret = {
+	form: undefined,
+	user: undefined,
+	pass: undefined
+    }
+    ret.form = document.querySelectorAll("form[id='signin_form']")[0]
+    ret.user = ret.form.querySelectorAll("input[id='email']")[0]
+    ret.pass = ret.form.querySelectorAll("input[id='password']")[0]
+    return ret
+}
+
+function find_fields_bamboohr () {
+    let ret = {
+	form: undefined,
+	user: undefined,
+	pass: undefined
+    }
+    ret.form = document.querySelectorAll("form[name='loginform']")[0]
+    ret.user = ret.form.querySelectorAll("input[name='username']")[0]
+    ret.pass = ret.form.querySelectorAll("input[name='password']")[0]
+    return ret
+}
+
+function find_fields_instagram () {
+    let ret = {
+	form: undefined,
+	user: undefined,
+	pass: undefined
+    }
+    ret.form = document.forms[0]
+    ret.user = ret.form.querySelectorAll("input[name='username']")[0]
+    ret.pass = ret.form.querySelectorAll("input[name='password']")[0]
+    return ret
+}
+
+function find_fields_paypal () {
+    let ret = {
+	form: undefined,
+	user: undefined,
+	pass: undefined
+    }
+    ret.form = document.querySelectorAll("form[name='login']")[0]
+    ret.user = ret.form.querySelectorAll("input[id='email']")[0]
+    ret.pass = ret.form.querySelectorAll("input[id='password']")[0]
+    return ret
+}
+
+function find_fields_imgur () {
+    let ret = {
+	form: undefined,
+	user: undefined,
+	pass: undefined
+    }
+    ret.form = document.querySelectorAll("form[id='signin-form']")[0]
+    ret.user = ret.form.querySelectorAll("input[id='username']")[0]
+    ret.pass = ret.form.querySelectorAll("input[id='password']")[0]
+    return ret
+}
+
+function find_fields_npmjs () {
+    let ret = {
+	form: undefined,
+	user: undefined,
+	pass: undefined
+    }
+    ret.form = document.querySelectorAll("form[id='login']")[0]
+    ret.user = ret.form.querySelectorAll("input[id='login_username']")[0]
+    ret.pass = ret.form.querySelectorAll("input[id='login_password']")[0]
+    return ret
+}
+
+function find_fields_quora () {
+    let ret = {
+	form: undefined,
+	user: undefined,
+	pass: undefined
+    }
+    ret.form = document.querySelectorAll("form[class='inline_login_form']")[0]
+    ret.user = ret.form.querySelectorAll("input[name='email']")[0]
+    ret.pass = ret.form.querySelectorAll("input[name='password']")[0]
+    return ret
+}
+
+// ------ ASYNC
+// these forms are displaying first the username and then the password
+// fields, through use of JS. This is more complex, hence a different
+// way of working with them
+
+function find_fields_amazon () {
+    let ret = {
+	async: true,
+	form: undefined,
+	user: undefined,
+	pass: undefined
+    }
+    ret.form = document.querySelectorAll("form[name='signIn']")[0]
+    ret.user = document.querySelectorAll("input[name='email']")[0]
+    ret.pass = document.querySelectorAll("input[name='password']")[0]
+    send_webext_message("is_account_username_pending", {}, function (res) {
+	if (res.success) {
+	    ret.form.addEventListener("submit", function () {
+		send_webext_message("add_account_password_pending", {pass: ret.pass.value}, function (res) {
+		    console.log(res)
+		})
+	    }, {once: true})
+	} else {
+	    ret.form.addEventListener("submit", function () {
+		send_webext_message("add_account_username_pending", {user: ret.user.value}, function (res) {
+		    console.log(res)
+		})
+		ret.form.addEventListener("submit", function () {
+		    send_webext_message("add_account_password_pending", {pass: ret.pass.value}, function (res) {
+			console.log(res)
+		    })
+		}, {once: true})
+	    }, {once: true})
+	}
+    })
+}
+
+function find_fields_deliveroo () {
+    let ret = {
+	async: true,
+	form: undefined,
+	user: undefined,
+	pass: undefined
+    }
+    let button0 = document.querySelectorAll("button[class='ccl-d0484b0360a2b432 ccl-233931c277401e86 ccl-ed9aadeaa18a9f19 ccl-a97a150ddadaa172']")[0]
+
+    button0.addEventListener("click", function () {
+	alert("aled")
+	ret.form = document.querySelectorAll("form[name='signIn']")[0]
+	ret.user = document.querySelectorAll("input[id='email-address']")[0]
+	let button1 = document.querySelectorAll("button[type='submit']")[0]
+
+	button1.addEventListener("onclick", function () {
+	    ret.pass = document.querySelectorAll("input[name='password']")[0]
+	    let button2 = document.querySelectorAll("div[id='passwordNext']")[0]
+	    send_webext_message("add_account_username_pending", {user: ret.user.value}, function (res) {
+		console.log(res)
+	    })
+	    button2.addEventListener("onclick", function () {
+		send_webext_message("add_account_password_pending", {pass: ret.pass.value}, function (res) {
+		    console.log(res)
+		})
+	    }, {once: true})
+	}, {once: true})
+    }, {once: true})
+}
+
+function find_fields_sncf () {
+    let ret = {
+	async: true,
+	form: undefined,
+	user: undefined,
+	pass: undefined
+    }
+    ret.form = document.querySelectorAll("form[id='vsc-menu-ccl-login-form']")[0]
+    ret.user = document.querySelectorAll("input[id='ccl-email']")[0]
+    let button1 = document.querySelectorAll("button[id='edit-connect']")[0]
+
+    ret.form.addEventListener("onsubmit", function () {
+	alert("aled")
+	ret.pass = document.querySelectorAll("input[name='password']")[0]
+	let button2 = document.querySelectorAll("div[id='passwordNext']")[0]
+	send_webext_message("add_account_username_pending", {user: ret.user.value}, function (res) {
+	    console.log(res)
+	})
+	button2.addEventListener("onclick", function () {
+	    send_webext_message("add_account_password_pending", {pass: ret.pass.value}, function (res) {
+		console.log(res)
+	    })
+	}, {once: true})
+    }, {once: true})
+}
+
+// ------ MATCHING
+
+// here we find the function to be used for each site. first we try
+// with the simple forms, then with the "two-time" ones.
 
 function find_fields () {
     let finders = new Map([
-	["stackoverflow", find_fields_stackoverflow],
-	["fb", find_fields_fb],
-	["wiki", find_fields_wiki],
-	["ebay", find_fields_ebay],
-	["twitter", find_fields_twitter]
-    ])  // REMEMBER TO PUT COMA AT THE END, THERE IS NO ERROR
+	["ebay.com", find_fields_ebay],
+	["wikipedia.org", find_fields_wiki],
+	["wiktionary.org", find_fields_wiki],
+	["twitter.com", find_fields_twitter],
+	["facebook.com", find_fields_fb],
+	["trello.com", find_fields_trello],
+	["gitlab.com", find_fields_gitlab],
+	["github.com", find_fields_github],
+	["maratp.ratp.fr", find_fields_ratp],
+	["slack.com", find_fields_slack],
+	["bamboohr.com", find_fields_bamboohr],
+	["paypal.com", find_fields_paypal],
+	["imgur.com", find_fields_imgur],
+	["npmjs.com", find_fields_npmjs]
+    ])
+
+    let curr_url = new URL(location.href)
+    let curr_host = curr_url.hostname
     for (let [k, f] of finders) {
-	let r = f()
-	if (r && r.form && r.user && r.pass) {
-	    // alert("FOUND: " + k + " => " + JSON.stringify(r.user))
-	    return r
+	if (curr_host == k || curr_host.search("." + k) != -1) {
+	    let r = f()
+	    if (r && r.form && r.user && r.pass) {
+		return r
+	    }
 	}
-	// alert(JSON.stringify(r))
+    }
+    // if no "normal" finder matched, go for the async ones
+    let async_finders = new Map([
+	["amazon.com", find_fields_amazon],
+	["oui.sncf", find_fields_sncf]
+    ])
+    for (let [k, f] of async_finders) {
+	if (curr_host == k || curr_host.search("." + k) != -1) {
+	    f()
+	    return {}
+	}
     }
 }

@@ -1,4 +1,8 @@
 
+// This file is a simple wrapper used to send messages to the
+// background script of the WebExt
+
+
 /*
 ** params is an object that will contain the parameters
 ** needed on the background script side

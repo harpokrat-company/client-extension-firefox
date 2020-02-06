@@ -1,3 +1,11 @@
+
+// This file asks the background script if an accout is pending
+// (after being caught in a login form)
+// and if so, displays a modal in the current website asking if
+// this account should be recorded (and hence sent to HPK server)
+
+
+
 const create_new_pass_modal = (username, password) => {
     let link = document.createElement("LINK");
     link.href = "https://fonts.googleapis.com/css?family=Montserrat"
@@ -27,23 +35,25 @@ const create_new_pass_modal = (username, password) => {
     mark.style = "font-family: 'Montserrat', sans-serif !important;display: inline-block; margin-left: 5px; float:right;"
     mark.textContent = "Harpokrat"
 
+    // remove from pending, send to server (through background script)
     btnConfirm.onclick = function() {
 	let mo = document.getElementById('harpokratModal');
 	mo.style.display = "none";
 	send_webext_message("add_account", {user: username, pass: password}, (response) => {
-            console.log(response)
-        })
+	    console.log(response)
+	})
 	send_webext_message("delete_pending_account", {user: username, pass: password}, (response) => {
 	    console.log(response)
-        })
+	})
     }
 
+    // forget about pendign account
     btnRefuse.onclick = function() {
 	let mo = document.getElementById('harpokratModal');
 	mo.style.display = "none";
 	send_webext_message("delete_pending_account", {user: username, pass: password}, (response) => {
-            console.log(response)
-        })
+	    console.log(response)
+	})
     }
 
     modal_content.appendChild(p)
@@ -58,17 +68,17 @@ const new_pass = () => {
     let fields = find_fields()
 
     send_webext_message("is_account_pending", true, (response) => {
-        if (response.success == true)
+	if (response.success == true)
 	    create_new_pass_modal(response.user, response.pass)
     })
     if (fields.form && fields.user && fields.pass) {
-        console.log(JSON.stringify(fields))
-        fields.form.addEventListener("submit", () => {
-            let account = {user: fields.user.value, pass: fields.pass.value}
-            send_webext_message("add_pending_account", account, (response) => {
-                console.log(response)
-            })
-        })
+	console.log(JSON.stringify(fields))
+	fields.form.addEventListener("submit", () => {
+	    let account = {user: fields.user.value, pass: fields.pass.value}
+	    send_webext_message("add_pending_account", account, (response) => {
+		console.log(response)
+	    })
+	})
     }
 }
 new_pass()

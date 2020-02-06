@@ -1,30 +1,15 @@
 chrome.runtime.onInstalled.addListener(function() {
     // setup placeholder account list
-    chrome.storage.local.set({acc_list: [], pending_acc_list: []}, function() {
-        console.log('create empty acc_list and pending_acc_list');
+    chrome.storage.local.set({acc_list: [], half_acc_list: [], pending_acc_list: []}, function() {
+	console.log('create empty acc_list and pending_acc_list');
     })
-
-    // // setup extension icon to be usable on all http(s) pages + local for tests
-    // chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-    //     chrome.declarativeContent.onPageChanged.addRules([{
-    //         conditions: [new chrome.declarativeContent.PageStateMatcher({
-    //             pageUrl: {urlMatches: ".*", schemes: ["http", "https", "file"]},
-    //         })
-    //                     ],
-    //         actions: [new chrome.declarativeContent.ShowPageAction()]
-    //     }]);
-    // });
 });
 
-/***********************************
-*               WIP                *
-***********************************/
 
+// Simple wrapper used to receive (and respond to) messages from the content scripts and the Angular popup
 const add_message_type = (message_type, handler) => {
-    // console.log(message_type)
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	if (request.message_type == message_type) {
-	    // console.log(message_type + " => " + JSON.stringify(request))
 	    return handler(request.params, sender, sendResponse)
 	}
     })
@@ -78,6 +63,88 @@ add_message_type("accounts", (params, sender, sendResponse) => {
     return true;
 })
 
+// search for a pending account for this website
+add_message_type("is_account_username_pending", (params, sender, sendResponse) => {
+    let sender_url = new URL(sender.tab.url)
+    if (sender_url.host == "") {
+	sender_url = new URL("http://localhost")
+    }
+    let user = params.user
+    console.log(sender_url.host + " searched for username: " + user)
+
+    chrome.storage.local.get(['half_acc_list'], function(res) {
+	let accounts = res.half_acc_list.filter(function (i) {
+	    return i.host == sender_url.host
+	}).map(i => i.user)
+	if (accounts.length > 0) {
+	    sendResponse({success: true});
+	} else {
+	    sendResponse({success: false});
+	}
+    })
+    return true;
+})
+
+// add a new pending account, after receiving username from 2-time form
+add_message_type("add_account_username_pending", (params, sender, sendResponse) => {
+    let sender_url = new URL(sender.tab.url)
+    if (sender_url.host == "") {
+	sender_url = new URL("http://localhost")
+    }
+    let user = params.user
+    console.log(sender_url.host + " sent username: " + user)
+
+    // update placeholder half-filled-account storage
+    chrome.storage.local.get(['half_acc_list'], function(res) {
+	res.half_acc_list.push({host: sender_url.host, user})
+	chrome.storage.local.set({half_acc_list: res.half_acc_list}, function() {
+	    console.log('added username for ' + sender_url.host + ' : ' + user);
+	    sendResponse({success: true});
+	})
+    })
+    return true;
+})
+
+
+// add a new pending account, after receiving password from 2-time form
+add_message_type("add_account_password_pending", (params, sender, sendResponse) => {
+    let sender_url = new URL(sender.tab.url)
+    if (sender_url.host == "") {
+	sender_url = new URL("http://localhost")
+    }
+    let pass = params.pass
+    console.log(sender_url.host + " sent pass: " + pass)
+
+    chrome.storage.local.get(['half_acc_list'], function(res) {
+	let accounts = res.half_acc_list.filter(function (i) {
+	    return i.host == sender_url.host
+	}).map(i => i.user)
+	if (accounts.length > 0) {
+	    let elem = accounts[0]
+	    chrome.storage.local.get(['pending_acc_list'], function(res) {
+		res.pending_acc_list.push({
+		    user: elem.user,
+		    pass: params.pass
+		})
+		chrome.storage.local.set({pending_acc_list: res.pending_acc_list}, function() {
+		    // sendResponse({success: true});
+		})
+	    })
+	    chrome.storage.local.get(['half_acc_list'], function(res) {
+		res.half_acc_list.splice(res.half_acc_list.indexOf({
+		    host: sender_url.host
+		}), 1)
+		chrome.storage.local.set({half_acc_list: res.half_acc_list}, function() {
+		    // sendResponse({success: true});
+		})
+	    })
+	    sendResponse({success: true, pass: elem.pass, user: elem.user})
+	} else
+	    sendResponse({success: false})
+    })
+    return true;
+})
+
 // add a new account, after receiving confirmation from a modal
 add_message_type("add_account", (params, sender, sendResponse) => {
     let sender_url = new URL(sender.tab.url)
@@ -111,6 +178,7 @@ add_message_type("add_pending_account", (params, sender, sendResponse) => {
 	    sendResponse({success: true});
 	})
     })
+    console.log("added pending account: " + params.user + " ; " + params.pass)
     return true;
 })
 
@@ -138,9 +206,4 @@ add_message_type("delete_pending_account", (params, sender, sendResponse) => {
 	})
     })
     return true;
-})
-
-// angular testing purposes
-add_message_type("aled", (params, sender, sendResponse) => {
-    sendResponse({success: true})
 })

@@ -8,9 +8,13 @@ import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PasswordComponent } from './password/password.component';
+import { SecretsComponent } from './secrets/secrets.component';
 import { TestsComponent } from './tests/tests.component';
 import { PasswordCollectionComponent } from './password-collection/password-collection.component';
 import { HarpokratModule } from '@harpokrat/api';
+
+// import {HarpokratModule} from '@harpokrat/lib/';
+import {HarpokratModule} from '../harpokrat/src/lib/harpokrat.module';
 
 @NgModule({
   declarations: [
@@ -19,19 +23,15 @@ import { HarpokratModule } from '@harpokrat/api';
     HeaderComponent,
     NavbarComponent,
     PasswordComponent,
+    SecretsComponent,
     TestsComponent,
     PasswordCollectionComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
-    HarpokratModule.forRoot(
-      'https://api.harpokrat.com:443/v1',
-      {
-        loginRouterPath: '/login'
-      }
-    ),
+    HarpokratModule.forRoot('https://api.harpokrat.com/v1', {loginRouterPath: '/login'}),
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
