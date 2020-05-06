@@ -6,6 +6,7 @@ import {PasswordListComponent} from './home/items/password-list/password-list.co
 import {PasswordShowComponent} from './home/items/password-list/password/password-show/password-show.component';
 import {PasswordEditComponent} from './home/items/password-list/password/password-edit/password-edit.component';
 import {PasswordAddComponent} from './home/items/password-list/password/password-add/password-add.component';
+import {WebExtAddPassComponent} from './web-ext-add-pass.component';
 import {PasswordDeleteComponent} from './home/items/password-list/password/password-delete/password-delete.component';
 import {LoginComponent} from './login/login/login.component';
 import {RegisterComponent} from './login/register/register.component';
@@ -16,6 +17,9 @@ import {LandingComponent} from "./landing/landing.component";
 const routes: Routes = [
   {
     path: '', component: LandingComponent,
+  },
+  {
+    path: 'webext_add_pass', component: WebExtAddPassComponent,
   },
   {
     path: 'login', component: LoginHomeComponent, children: [

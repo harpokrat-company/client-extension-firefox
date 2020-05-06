@@ -29,53 +29,53 @@ add_message_type("complete", (params, sender, sendResponse) => {
 	return true;
 })
 
-// read placeholder account storage and get needed password
-add_message_type("get_pass", (params, sender, sendResponse) => {
-    console.log(params);
-    let q = params.user;
-    chrome.storage.local.get(['acc_list'], function(res) {
-	let acc = res.acc_list.filter(i => i.user == q)
-	if (acc.length == 0)
-	    sendResponse({success: false})
-	else
-	    sendResponse({success: true, pass: acc[acc.length-1].pass})
-    })
-    return true;
-})
+//// read placeholder account storage and get needed password
+//add_message_type("get_pass", (params, sender, sendResponse) => {
+    //console.log(params);
+    //let q = params.user;
+    //chrome.storage.local.get(['acc_list'], function(res) {
+	//let acc = res.acc_list.filter(i => i.user == q)
+	//if (acc.length == 0)
+	    //sendResponse({success: false})
+	//else
+	    //sendResponse({success: true, pass: acc[acc.length-1].pass})
+    //})
+    //return true;
+//})
 
-// read placeholder account storage for usernames
-add_message_type("popup_current_url_accounts", (params, sender, sendResponse) => {
-    // console.log(JSON.stringify(sender))
-    // let sender_url = new URL(sender.tab.url)
-    chrome.storage.local.get(['acc_list'], function(res) {
-	let accounts = res.acc_list.filter(function (i) {
-	    // return i.host == sender_url.host
-	    return true
-	}).map(i => {
-	    return {
-		"url": i.host,
-		"username": i.user,
-		"password": i.pass
-	    }
-	})
-	sendResponse({success: true, accounts})
-	return;
-    })
-    return true;
-})
+//// read placeholder account storage for usernames
+//add_message_type("popup_current_url_accounts", (params, sender, sendResponse) => {
+    //// console.log(JSON.stringify(sender))
+    //// let sender_url = new URL(sender.tab.url)
+    //chrome.storage.local.get(['acc_list'], function(res) {
+	//let accounts = res.acc_list.filter(function (i) {
+	    //// return i.host == sender_url.host
+	    //return true
+	//}).map(i => {
+	    //return {
+		//"url": i.host,
+		//"username": i.user,
+		//"password": i.pass
+	    //}
+	//})
+	//sendResponse({success: true, accounts})
+	//return;
+    //})
+    //return true;
+//})
 
-// read placeholder account storage for usernames
-add_message_type("accounts", (params, sender, sendResponse) => {
-    let sender_url = new URL(sender.tab.url)
-    chrome.storage.local.get(['acc_list'], function(res) {
-	let accounts = res.acc_list.filter(function (i) {
-	    return i.host == sender_url.host
-	}).map(i => i.user)
-	sendResponse({success: true, accounts})
-	return;
-    })
-    return true;
-})
+//// read placeholder account storage for usernames
+//add_message_type("accounts", (params, sender, sendResponse) => {
+    //let sender_url = new URL(sender.tab.url)
+    //chrome.storage.local.get(['acc_list'], function(res) {
+	//let accounts = res.acc_list.filter(function (i) {
+	    //return i.host == sender_url.host
+	//}).map(i => i.user)
+	//sendResponse({success: true, accounts})
+	//return;
+    //})
+    //return true;
+//})
 
 // search for a pending account for this website
 add_message_type("is_account_username_pending", (params, sender, sendResponse) => {
@@ -183,16 +183,22 @@ add_message_type("add_account", (params, sender, sendResponse) => {
 // add a new account to the pending list
 // (for which we are waiting on a yes/no modal)
 add_message_type("add_pending_account", (params, sender, sendResponse) => {
+    let sender_url = new URL(sender.tab.url)
+    if (sender_url.host == "") {
+	sender_url = new URL("http://localhost")
+    }
     chrome.storage.local.get(['pending_acc_list'], function(res) {
 	res.pending_acc_list.push({
-	    user: params.user,
-	    pass: params.pass
+		name: sender_url.host + " - " + params.user,
+		user: params.user,
+		pass: params.pass,
+		domain: sender_url.host
 	})
 	chrome.storage.local.set({pending_acc_list: res.pending_acc_list}, function() {
 	    sendResponse({success: true});
 	})
     })
-    console.log("added pending account: " + params.user + " ; " + params.pass)
+    console.log("added pending account: " + sender_url.host + " ; " + params.user + " ; " + params.pass)
     return true;
 })
 
@@ -201,7 +207,7 @@ add_message_type("is_account_pending", (params, sender, sendResponse) => {
     chrome.storage.local.get(['pending_acc_list'], function(res) {
 	if (res.pending_acc_list.length > 0) {
 	    let elem = res.pending_acc_list[0]
-	    sendResponse({success: true, pass: elem.pass, user: elem.user})
+	    sendResponse({success: true, account: elem})
 	} else
 	    sendResponse({success: false})
     })
@@ -212,6 +218,8 @@ add_message_type("is_account_pending", (params, sender, sendResponse) => {
 add_message_type("delete_pending_account", (params, sender, sendResponse) => {
     chrome.storage.local.get(['pending_acc_list'], function(res) {
 	res.pending_acc_list.splice(res.pending_acc_list.indexOf({
+		name: params.name,
+		domain: params.domain,
 	    user: params.user,
 	    pass: params.pass
 	}), 1)
