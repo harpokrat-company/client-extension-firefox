@@ -1,24 +1,47 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
-import { LoginComponent } from './login/login.component';
-import { RegisterFormComponent } from '../harpokrat/src/lib/components/forms/register-form//register-form.component';
-import { SecretsComponent } from './secrets/secrets.component';
-import { PasswordCollectionComponent } from './password-collection/password-collection.component';
-import { TestsComponent } from './tests/tests.component';
+import {LoginHomeComponent} from './login/login-home.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {HomeComponent} from './home/home.component';
+import {PasswordListComponent} from './home/items/password-list/password-list.component';
+import {PasswordShowComponent} from './home/items/password-list/password/password-show/password-show.component';
+import {PasswordEditComponent} from './home/items/password-list/password/password-edit/password-edit.component';
+import {PasswordAddComponent} from './home/items/password-list/password/password-add/password-add.component';
+import {PasswordDeleteComponent} from './home/items/password-list/password/password-delete/password-delete.component';
+import {LoginComponent} from './login/login/login.component';
+import {RegisterComponent} from './login/register/register.component';
+import {ForgotPasswordComponent} from './login/forget-password/forgot-password.component';
+import {AuthGuard} from "@harpokrat/api";
+import {LandingComponent} from "./landing/landing.component";
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterFormComponent },
-  { path: 'tests', component: TestsComponent },
-  { path: 'secrets', component: SecretsComponent },
-  { path: 'homepage', component: PasswordCollectionComponent },
-  { path: '', redirectTo: 'login', pathMatch: 'full' }
+  {
+    path: '', component: LandingComponent,
+  },
+  {
+    path: 'login', component: LoginHomeComponent, children: [
+      {path: '', component: LoginComponent},
+      {path: 'register', component: RegisterComponent},
+      {path: 'forgot-password', component: ForgotPasswordComponent},
+    ]
+  },
+  {
+    path: 'app', component: HomeComponent, canActivate: [AuthGuard], children: [
+      {
+        path: 'passwords', component: PasswordListComponent, children: [
+          {path: 'add', component: PasswordAddComponent},
+          {path: ':id', redirectTo: ':id/show'},
+          {path: ':id/edit', component: PasswordEditComponent},
+          {path: ':id/delete', component: PasswordDeleteComponent},
+          {path: ':id/show', component: PasswordShowComponent},
+        ]
+      }
+    ],
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-  providers: [],
+  exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

@@ -284,22 +284,12 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@harpokrat/lib@file:./../angular-library":
-  version "0.0.0"
+"@harpokrat/api@^0.0.6":
+  version "0.0.6"
+  resolved "https://npm-registry.harpokrat.net/@harpokrat%2fapi/-/api-0.0.6.tgz#50fe5947fdcd025fd8e6cbdc7c57732e2f004033"
+  integrity sha512-Dw88wjtRuZMLNgOEBuK32oEw4J7yBoSaAZCJL5rmV/kJw4upNrzzNMS2Wh9cTILdCpXIYLZJ01xrzb7Zxll8kA==
   dependencies:
-    "@angular/animations" "~7.2.0"
-    "@angular/common" "~7.2.0"
-    "@angular/compiler" "~7.2.0"
-    "@angular/core" "~7.2.0"
-    "@angular/forms" "~7.2.0"
-    "@angular/platform-browser" "~7.2.0"
-    "@angular/platform-browser-dynamic" "~7.2.0"
-    "@angular/router" "~7.2.0"
-    bootstrap "^4.3.1"
-    core-js "^2.5.4"
-    rxjs "~6.3.3"
     tslib "^1.9.0"
-    zone.js "~0.8.26"
 
 "@ngtools/webpack@7.3.9":
   version "7.3.9"
@@ -1092,11 +1082,6 @@ bonjour@^3.5.0:
     dns-txt "^2.0.2"
     multicast-dns "^6.0.1"
     multicast-dns-service-types "^1.1.0"
-
-bootstrap@^4.3.1:
-  version "4.4.1"
-  resolved "https://registry.npmjs.org/bootstrap/-/bootstrap-4.4.1.tgz#8582960eea0c5cd2bede84d8b0baf3789c3e8b01"
-  integrity sha512-tbx5cHubwE6e2ZG7nqM3g/FZ5PQEDMWmMGNrCUBVRPHXTJaH7CBDdsLeu3eCh3B1tzAxTnAbtmrzvWEvT2NNEA==
 
 brace-expansion@^1.1.7:
   version "1.1.11"

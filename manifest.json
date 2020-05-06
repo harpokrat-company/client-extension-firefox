@@ -27,5 +27,5 @@
             "js": ["content_scripts/send_message.js","content_scripts/new_find_fields.js", "content_scripts/new_pass.js", "content_scripts/find_pass.js"]
         }
     ],
-    "permissions": ["activeTab", "storage", "tabs"]
+    "permissions": ["activeTab", "storage", "tabs", "*://harpokrat.com/*", "*://*.harpokrat.com/*"]
 }
