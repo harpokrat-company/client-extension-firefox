@@ -15,6 +15,20 @@ const add_message_type = (message_type, handler) => {
     })
 }
 
+// the angular popup asked us to complete a form
+add_message_type("complete", (params, sender, sendResponse) => {
+	console.log(params);
+	chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+		chrome.tabs.sendMessage(tabs[0].id, {command: "complete", params: params}, function(response) {
+			console.log(response);
+			sendResponse({success: true})
+			return true;
+		});
+	});
+	sendResponse({success: false})
+	return true;
+})
+
 // read placeholder account storage and get needed password
 add_message_type("get_pass", (params, sender, sendResponse) => {
     console.log(params);

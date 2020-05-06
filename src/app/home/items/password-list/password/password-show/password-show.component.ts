@@ -4,6 +4,8 @@ import {Resource, SecretService} from "@harpokrat/api";
 import {Observable} from "rxjs";
 import {Secret} from "@harpokrat/hcl";
 
+import {sendWebExtMessage} from '../../../../../../webext-messaging';
+
 @Component({
   selector: 'app-password-show',
   templateUrl: './password-show.component.html',
@@ -26,5 +28,13 @@ export class PasswordShowComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.getPassword(params.get('id'));
     });
+  }
+
+  public extComplete(domain, login, pass) {
+	    sendWebExtMessage("complete", {domain: domain, login: login, pass: pass}, (res) => {
+		    if (res.success) {
+			    //alert("background script completed")
+		    }
+	    })
   }
 }

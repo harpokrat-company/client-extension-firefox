@@ -28,6 +28,7 @@
 		"ngx-bootstrap": "^4.1.1",
 		"rxjs": "~6.5.5",
 		"tslib": "^1.10.0",
+		"web-ext-types": "^3.2.1",
 		"zone.js": "~0.10.2"
 	},
 	"devDependencies": {
