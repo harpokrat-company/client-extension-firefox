@@ -16,7 +16,7 @@ interface EvListener<T extends Function> {
 
 type Listener<T> = EvListener<(arg: T) => void>;
 
-declare namespace browser.alarms {
+declare namespace chrome.alarms {
   type Alarm = {
     name: string;
     scheduledTime: number;
@@ -40,7 +40,7 @@ declare namespace browser.alarms {
   const onAlarm: Listener<Alarm>;
 }
 
-declare namespace browser.bookmarks {
+declare namespace chrome.bookmarks {
   type BookmarkTreeNodeUnmodifiable = "managed";
   type BookmarkTreeNodeType = "bookmark" | "folder" | "separator";
   type BookmarkTreeNode = {
@@ -133,7 +133,7 @@ declare namespace browser.bookmarks {
   >;
 }
 
-declare namespace browser.browserAction {
+declare namespace chrome.browserAction {
   type ColorArray = [number, number, number, number];
   type ImageDataType = ImageData;
 
@@ -187,10 +187,10 @@ declare namespace browser.browserAction {
   function enable(tabId?: number): void;
   function disable(tabId?: number): void;
 
-  const onClicked: Listener<browser.tabs.Tab>;
+  const onClicked: Listener<chrome.tabs.Tab>;
 }
 
-declare namespace browser.browsingData {
+declare namespace chrome.browsingData {
   type DataTypeSet = {
     cache?: boolean;
     cookies?: boolean;
@@ -234,7 +234,7 @@ declare namespace browser.browsingData {
   }>;
 }
 
-declare namespace browser.commands {
+declare namespace chrome.commands {
   type Command = {
     name?: string;
     description?: string;
@@ -246,7 +246,7 @@ declare namespace browser.commands {
   const onCommand: Listener<string>;
 }
 
-declare namespace browser.menus {
+declare namespace chrome.menus {
   type ContextType =
     | "all"
     | "audio"
@@ -300,7 +300,7 @@ declare namespace browser.menus {
       enabled?: boolean;
       icons?: object;
       id?: string;
-      onclick?: (info: OnClickData, tab: browser.tabs.Tab) => void;
+      onclick?: (info: OnClickData, tab: chrome.tabs.Tab) => void;
       parentId?: number | string;
       targetUrlPatterns?: string[];
       title?: string;
@@ -329,7 +329,7 @@ declare namespace browser.menus {
       contexts?: ContextType[];
       documentUrlPatterns?: string[];
       enabled?: boolean;
-      onclick?: (info: OnClickData, tab: browser.tabs.Tab) => void;
+      onclick?: (info: OnClickData, tab: chrome.tabs.Tab) => void;
       parentId?: number | string;
       targetUrlPatterns?: string[];
       title?: string;
@@ -339,15 +339,15 @@ declare namespace browser.menus {
   ): Promise<void>;
 
   const onClicked: EvListener<
-    (info: OnClickData, tab: browser.tabs.Tab) => void
+    (info: OnClickData, tab: chrome.tabs.Tab) => void
   >;
 
   const onHidden: EvListener<() => void>;
 
-  const onShown: EvListener<(info: OnClickData, tab: browser.tabs.Tab) => void>;
+  const onShown: EvListener<(info: OnClickData, tab: chrome.tabs.Tab) => void>;
 }
 
-declare namespace browser.contextualIdentities {
+declare namespace chrome.contextualIdentities {
   type IdentityColor =
     | "blue"
     | "turquoise"
@@ -389,7 +389,7 @@ declare namespace browser.contextualIdentities {
   function remove(cookieStoreId: string): Promise<ContextualIdentity | null>;
 }
 
-declare namespace browser.cookies {
+declare namespace chrome.cookies {
   type Cookie = {
     name: string;
     value: string;
@@ -465,7 +465,7 @@ declare namespace browser.cookies {
   }>;
 }
 
-declare namespace browser.contentScripts {
+declare namespace chrome.contentScripts {
   type RegisteredContentScriptOptions = {
     allFrames?: boolean;
     css?: ({ file: string } | { code: string })[];
@@ -487,7 +487,7 @@ declare namespace browser.contentScripts {
   ): Promise<RegisteredContentScript>;
 }
 
-declare namespace browser.devtools.inspectedWindow {
+declare namespace chrome.devtools.inspectedWindow {
   const tabId: number;
 
   function reload(reloadOptions?: {
@@ -497,11 +497,11 @@ declare namespace browser.devtools.inspectedWindow {
   }): void;
 }
 
-declare namespace browser.devtools.network {
+declare namespace chrome.devtools.network {
   const onNavigated: Listener<string>;
 }
 
-declare namespace browser.devtools.panels {
+declare namespace chrome.devtools.panels {
   type ExtensionPanel = {
     onShown: Listener<Window>;
     onHidden: Listener<void>;
@@ -514,7 +514,7 @@ declare namespace browser.devtools.panels {
   ): Promise<ExtensionPanel>;
 }
 
-declare namespace browser.downloads {
+declare namespace chrome.downloads {
   type FilenameConflictAction = "uniquify" | "overwrite" | "prompt";
 
   type InterruptReason =
@@ -660,7 +660,7 @@ declare namespace browser.downloads {
   }>;
 }
 
-declare namespace browser.events {
+declare namespace chrome.events {
   type UrlFilter = {
     hostContains?: string;
     hostEquals?: string;
@@ -685,7 +685,7 @@ declare namespace browser.events {
   };
 }
 
-declare namespace browser.extension {
+declare namespace chrome.extension {
   type ViewType = "tab" | "notification" | "popup";
 
   const lastError: string | null;
@@ -702,7 +702,7 @@ declare namespace browser.extension {
   // unsupported: events as they are deprecated
 }
 
-declare namespace browser.extensionTypes {
+declare namespace chrome.extensionTypes {
   type ImageFormat = "jpeg" | "png";
   type ImageDetails = {
     format: ImageFormat;
@@ -720,7 +720,7 @@ declare namespace browser.extensionTypes {
   type InjectDetailsCSS = InjectDetails & { cssOrigin?: "user" | "author" };
 }
 
-declare namespace browser.find {
+declare namespace chrome.find {
     type FindOptions = {
         tabid: number;
         caseSensitive: boolean;
@@ -766,7 +766,7 @@ declare namespace browser.find {
     function removeHighlighting(): void;
 }
 
-declare namespace browser.history {
+declare namespace chrome.history {
   type TransitionType =
     | "link"
     | "typed"
@@ -828,7 +828,7 @@ declare namespace browser.history {
   const onVisitRemoved: Listener<{ allHistory: boolean; urls: string[] }>;
 }
 
-declare namespace browser.i18n {
+declare namespace chrome.i18n {
   type LanguageCode = string;
 
   function getAcceptLanguages(): Promise<LanguageCode[]>;
@@ -848,7 +848,7 @@ declare namespace browser.i18n {
   }>;
 }
 
-declare namespace browser.identity {
+declare namespace chrome.identity {
   function getRedirectURL(): string;
   function launchWebAuthFlow(details: {
     url: string;
@@ -856,7 +856,7 @@ declare namespace browser.identity {
   }): Promise<string>;
 }
 
-declare namespace browser.idle {
+declare namespace chrome.idle {
   type IdleState = "active" | "idle" /* unsupported: | "locked" */;
 
   function queryState(detectionIntervalInSeconds: number): Promise<IdleState>;
@@ -865,7 +865,7 @@ declare namespace browser.idle {
   const onStateChanged: Listener<IdleState>;
 }
 
-declare namespace browser.management {
+declare namespace chrome.management {
   type ExtensionInfo = {
     description: string;
     // unsupported: disabledReason: string,
@@ -894,7 +894,7 @@ declare namespace browser.management {
   }): Promise<void>;
 }
 
-declare namespace browser.notifications {
+declare namespace chrome.notifications {
   type TemplateType = "basic" /* | "image" | "list" | "progress" */;
 
   type NotificationOptions = {
@@ -919,7 +919,7 @@ declare namespace browser.notifications {
   const onClicked: Listener<string>;
 }
 
-declare namespace browser.omnibox {
+declare namespace chrome.omnibox {
   type OnInputEnteredDisposition =
     | "currentTab"
     | "newForegroundTab"
@@ -941,7 +941,7 @@ declare namespace browser.omnibox {
   const onInputCancelled: Listener<void>;
 }
 
-declare namespace browser.pageAction {
+declare namespace chrome.pageAction {
   type ImageDataType = ImageData;
 
   function show(tabId: number): void;
@@ -962,10 +962,10 @@ declare namespace browser.pageAction {
 
   function getPopup(details: { tabId: number }): Promise<string>;
 
-  const onClicked: Listener<browser.tabs.Tab>;
+  const onClicked: Listener<chrome.tabs.Tab>;
 }
 
-declare namespace browser.permissions {
+declare namespace chrome.permissions {
   type Permission =
     | "activeTab"
     | "alarms"
@@ -1020,7 +1020,7 @@ declare namespace browser.permissions {
   // const onRemoved: Listener<Permissions>;
 }
 
-declare namespace browser.runtime {
+declare namespace chrome.runtime {
   const lastError: string | null;
   const id: string;
 
@@ -1035,7 +1035,7 @@ declare namespace browser.runtime {
   };
 
   type MessageSender = {
-    tab?: browser.tabs.Tab;
+    tab?: chrome.tabs.Tab;
     frameId?: number;
     id?: string;
     url?: string;
@@ -1109,14 +1109,14 @@ declare namespace browser.runtime {
       [imgSize: string]: string;
     };
     incognito?: "spanning" | "split" | "not_allowed";
-    optional_permissions?: browser.permissions.Permission[];
+    optional_permissions?: chrome.permissions.Permission[];
     options_ui?: {
       page: string;
       browser_style?: boolean;
       chrome_style?: boolean;
       open_in_tab?: boolean;
     };
-    permissions?: browser.permissions.Permission[];
+    permissions?: chrome.permissions.Permission[];
     web_accessible_resources?: string[];
 
     // WebExtensionLangpackManifest
@@ -1163,7 +1163,7 @@ declare namespace browser.runtime {
         description?: string;
       };
     };
-    default_locale?: browser.i18n.LanguageCode;
+    default_locale?: chrome.i18n.LanguageCode;
     devtools_page?: string;
     omnibox?: {
       keyword: string;
@@ -1388,13 +1388,13 @@ declare namespace browser.runtime {
   const onMessageExternal: EvListener<onMessageEvent>;
 }
 
-declare namespace browser.sessions {
+declare namespace chrome.sessions {
   type Filter = { maxResults?: number };
 
   type Session = {
     lastModified: number;
-    tab: browser.tabs.Tab;
-    window: browser.windows.Window;
+    tab: chrome.tabs.Tab;
+    window: chrome.windows.Window;
   };
 
   const MAX_SESSION_RESULTS: number;
@@ -1432,7 +1432,7 @@ declare namespace browser.sessions {
   const onChanged: EvListener<() => void>;
 }
 
-declare namespace browser.sidebarAction {
+declare namespace chrome.sidebarAction {
   type ImageDataType = ImageData;
 
   function setPanel(details: { panel: string; tabId?: number }): void;
@@ -1460,7 +1460,7 @@ declare namespace browser.sidebarAction {
   function close(): Promise<void>;
 }
 
-declare namespace browser.storage {
+declare namespace chrome.storage {
   // Non-firefox implementations don't accept all these types
   type StorageValue =
     | string
@@ -1527,7 +1527,7 @@ declare namespace browser.storage {
   >;
 }
 
-declare namespace browser.tabs {
+declare namespace chrome.tabs {
   type MutedInfoReason = "capture" | "extension" | "user";
   type MutedInfo = {
     muted: boolean;
@@ -1579,7 +1579,7 @@ declare namespace browser.tabs {
   function connect(
     tabId: number,
     connectInfo?: { name?: string; frameId?: number }
-  ): browser.runtime.Port;
+  ): chrome.runtime.Port;
   function create(createProperties: {
     active?: boolean;
     cookieStoreId?: string;
@@ -1592,36 +1592,36 @@ declare namespace browser.tabs {
   }): Promise<Tab>;
   function captureTab(
     tabId?: number,
-    options?: browser.extensionTypes.ImageDetails
+    options?: chrome.extensionTypes.ImageDetails
   ): Promise<string>;
   function captureVisibleTab(
     windowId?: number,
-    options?: browser.extensionTypes.ImageDetails
+    options?: chrome.extensionTypes.ImageDetails
   ): Promise<string>;
   function detectLanguage(tabId?: number): Promise<string>;
   function duplicate(tabId: number): Promise<Tab>;
   function executeScript(
     tabId: number | undefined,
-    details: browser.extensionTypes.InjectDetails
+    details: chrome.extensionTypes.InjectDetails
   ): Promise<object[]>;
   function get(tabId: number): Promise<Tab>;
   // deprecated: function getAllInWindow(): x;
   function getCurrent(): Promise<Tab>;
-  // deprecated: function getSelected(windowId?: number): Promise<browser.tabs.Tab>;
+  // deprecated: function getSelected(windowId?: number): Promise<chrome.tabs.Tab>;
   function getZoom(tabId?: number): Promise<number>;
   function getZoomSettings(tabId?: number): Promise<ZoomSettings>;
   function hide(tabIds: number | number[]): Promise<number[]>;
   // unsupported: function highlight(highlightInfo: {
   //     windowId?: number,
   //     tabs: number[]|number,
-  // }): Promise<browser.windows.Window>;
+  // }): Promise<chrome.windows.Window>;
   function insertCSS(
     tabId: number | undefined,
-    details: browser.extensionTypes.InjectDetailsCSS
+    details: chrome.extensionTypes.InjectDetailsCSS
   ): Promise<void>;
   function removeCSS(
     tabId: number | undefined,
-    details: browser.extensionTypes.InjectDetails
+    details: chrome.extensionTypes.InjectDetails
   ): Promise<void>;
   function move(
     tabIds: number | number[],
@@ -1758,7 +1758,7 @@ declare namespace browser.tabs {
   }>;
 }
 
-declare namespace browser.topSites {
+declare namespace chrome.topSites {
   type MostVisitedURL = {
     title: string;
     url: string;
@@ -1766,7 +1766,7 @@ declare namespace browser.topSites {
   function get(): Promise<MostVisitedURL[]>;
 }
 
-declare namespace browser.webNavigation {
+declare namespace chrome.webNavigation {
   type TransitionType = "link" | "auto_subframe" | "form_submit" | "reload";
   // unsupported: | "typed" | "auto_bookmark" | "manual_subframe"
   //              | "generated" | "start_page" | "keyword"
@@ -1800,7 +1800,7 @@ declare namespace browser.webNavigation {
     addListener: (
       callback: (arg: T) => void,
       filter?: {
-        url: browser.events.UrlFilter[];
+        url: chrome.events.UrlFilter[];
       }
     ) => void;
     removeListener: (callback: (arg: T) => void) => void;
@@ -1857,7 +1857,7 @@ declare namespace browser.webNavigation {
   const onHistoryStateUpdated: TransitionNavListener;
 }
 
-declare namespace browser.webRequest {
+declare namespace chrome.webRequest {
   type ResourceType =
     | "main_frame"
     | "sub_frame"
@@ -2115,7 +2115,7 @@ declare namespace browser.webRequest {
   function filterResponseData(requestId: string): StreamFilter;
 }
 
-declare namespace browser.windows {
+declare namespace chrome.windows {
   type WindowType = "normal" | "popup" | "panel" | "devtools";
 
   type WindowState =
@@ -2132,7 +2132,7 @@ declare namespace browser.windows {
     left?: number;
     width?: number;
     height?: number;
-    tabs?: browser.tabs.Tab[];
+    tabs?: chrome.tabs.Tab[];
     incognito: boolean;
     type?: WindowType;
     state?: WindowState;
@@ -2152,22 +2152,22 @@ declare namespace browser.windows {
       populate?: boolean;
       windowTypes?: WindowType[];
     }
-  ): Promise<browser.windows.Window>;
+  ): Promise<chrome.windows.Window>;
 
   function getCurrent(getInfo?: {
     populate?: boolean;
     windowTypes?: WindowType[];
-  }): Promise<browser.windows.Window>;
+  }): Promise<chrome.windows.Window>;
 
   function getLastFocused(getInfo?: {
     populate?: boolean;
     windowTypes?: WindowType[];
-  }): Promise<browser.windows.Window>;
+  }): Promise<chrome.windows.Window>;
 
   function getAll(getInfo?: {
     populate?: boolean;
     windowTypes?: WindowType[];
-  }): Promise<browser.windows.Window[]>;
+  }): Promise<chrome.windows.Window[]>;
 
   // TODO: url and tabId should be exclusive
   function create(createData?: {
@@ -2183,7 +2183,7 @@ declare namespace browser.windows {
     titlePreface?: string;
     type?: CreateType;
     state?: WindowState;
-  }): Promise<browser.windows.Window>;
+  }): Promise<chrome.windows.Window>;
 
   function update(
     windowId: number,
@@ -2196,18 +2196,18 @@ declare namespace browser.windows {
       drawAttention?: boolean;
       state?: WindowState;
     }
-  ): Promise<browser.windows.Window>;
+  ): Promise<chrome.windows.Window>;
 
   function remove(windowId: number): Promise<void>;
 
-  const onCreated: Listener<browser.windows.Window>;
+  const onCreated: Listener<chrome.windows.Window>;
 
   const onRemoved: Listener<number>;
 
   const onFocusChanged: Listener<number>;
 }
 
-declare namespace browser.theme {
+declare namespace chrome.theme {
   type Theme = {
     images: ThemeImages;
     colors: ThemeColors;
@@ -2266,5 +2266,5 @@ export function sendWebExtMessage(message_type, params, callback) {
     let id = Math.floor(Math.random() * 100000000)
     let request = {id: id, message_type: message_type, params: params}
     console.log(JSON.stringify(request))
-    browser.runtime.sendMessage(request, callback)
+    chrome.runtime.sendMessage(request, callback)
 }
