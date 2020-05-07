@@ -29,6 +29,8 @@ import { LandingShortTextCardComponent } from './landing/landing-short-text-card
 import { LandingBigTextComponent } from './landing/landing-big-text/landing-big-text.component';
 import { LandingFaqComponent } from './landing/landing-faq/landing-faq.component';
 import { LandingFaqQuestionComponent } from './landing/landing-faq/landing-faq-question/landing-faq-question.component';
+import { SecureActionPageComponent } from './secure-action-page/secure-action-page.component';
+import { ProfileComponent } from './home/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { LandingFaqQuestionComponent } from './landing/landing-faq/landing-faq-q
     LandingShortTextCardComponent,
     LandingBigTextComponent,
     LandingFaqComponent,
-    LandingFaqQuestionComponent
+    LandingFaqQuestionComponent,
+    SecureActionPageComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
