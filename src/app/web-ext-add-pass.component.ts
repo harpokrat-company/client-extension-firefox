@@ -38,7 +38,8 @@ export class WebExtAddPassComponent implements OnInit {
 
 	abort(account) {
 		sendWebExtMessage("delete_pending_account", account, (res) => {})
-		this.router.navigate(['/']).then();
+		this.router.navigate(['/app/passwords']).then();
+		window.close();
 	}
 
 	addAccount(account) {
@@ -56,12 +57,14 @@ export class WebExtAddPassComponent implements OnInit {
 				(resource) => {
 					console.log(resource);
 					sendWebExtMessage("delete_pending_account", account, (res) => {})
-					this.router.navigate(['/']).then();
+					this.router.navigate(['/app/passwords']).then();
+					window.close();
 				},
 				() => {
 					//this.error = 'An error occurred';
 					sendWebExtMessage("delete_pending_account", account, (res) => {})
-					this.router.navigate(['/']).then();
+					this.router.navigate(['/app/passwords']).then();
+					window.close();
 				},
 				);
 		});
