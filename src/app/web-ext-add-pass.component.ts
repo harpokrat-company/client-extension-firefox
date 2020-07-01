@@ -25,19 +25,20 @@ export class WebExtAddPassComponent implements OnInit {
 		    private $secretService: SecretService,
 		    private $authService: AuthService,
 		    private $hclwService: HclwService) {
-		sendWebExtMessage("is_account_pending", {}, (res) => {
-			if (res.success) {
-				this.account = res.account
-				this.account.login = res.account.user
-			}
-		})
+		sendWebExtMessage("is_account_pending", {})
+			.then((res: any) => {
+				if (res.success) {
+					this.account = res.account
+					this.account.login = res.account.user
+				}
+			})
         }
 
 	ngOnInit() {
 	}
 
 	abort(account) {
-		sendWebExtMessage("delete_pending_account", account, (res) => {})
+		sendWebExtMessage("delete_pending_account", account)
 		this.router.navigate(['/app/passwords']).then();
 		window.close();
 	}
@@ -56,13 +57,13 @@ export class WebExtAddPassComponent implements OnInit {
 			).subscribe(
 				(resource) => {
 					console.log(resource);
-					sendWebExtMessage("delete_pending_account", account, (res) => {})
+					sendWebExtMessage("delete_pending_account", account)
 					this.router.navigate(['/app/passwords']).then();
 					window.close();
 				},
 				() => {
 					//this.error = 'An error occurred';
-					sendWebExtMessage("delete_pending_account", account, (res) => {})
+					sendWebExtMessage("delete_pending_account", account)
 					this.router.navigate(['/app/passwords']).then();
 					window.close();
 				},

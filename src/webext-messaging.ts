@@ -1,9 +1,3 @@
-/*
-** params is an object that will contain the parameters
-** needed on the background script side
-** callback's only parameter is the response object
-*/
-
 // This Source Code Form is subject to the terms of the Mozilla Public
 // license, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -2262,9 +2256,9 @@ declare namespace chrome.theme {
   function reset(windowId: number): Promise<void>;
 }
 
-export function sendWebExtMessage(message_type, params, callback) {
-    let id = Math.floor(Math.random() * 100000000)
-    let request = {id: id, message_type: message_type, params: params}
-    console.log(JSON.stringify(request))
-    chrome.runtime.sendMessage(request, callback)
+export async function sendWebExtMessage(message_type, params) {
+	let id = Math.floor(Math.random() * 100000000)
+	let request = {id: id, message_type: message_type, params: params}
+	// console.log(JSON.stringify(request))
+	return chrome.runtime.sendMessage(request)
 }

@@ -18,12 +18,13 @@ export class LandingComponent implements OnInit {
   ngOnInit() {
 	  this.authService.authenticatedObservable.subscribe((authenticated) => {
 		  if (authenticated) {
-			  sendWebExtMessage("is_account_pending", {}, (res) => {
-				  if (res.success && res.account) {
-					  this.router.navigate(['/webext_add_pass']).then();
-					  //alert("background script completed")
-				  }
-			  })
+			  sendWebExtMessage("is_account_pending", {})
+				  .then((res: any) => {
+					  if (res.success && res.account) {
+						  this.router.navigate(['/webext_add_pass']).then();
+						  //alert("background script completed")
+					  }
+				  })
 		  }
 
 	  })

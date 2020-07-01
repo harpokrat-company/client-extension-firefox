@@ -21,6 +21,7 @@
 		"@angular/router": "~9.1.4",
 		"@harpokrat/api": "^0.0.20",
 		"@harpokrat/bootstrap": "^0.1.5",
+		"@harpokrat/client": "^0.0.2",
 		"@harpokrat/hcl": "0.0.18",
 		"bootstrap": "^4.3.1",
 		"core-js": "^2.5.4",
@@ -29,6 +30,7 @@
 		"rxjs": "~6.5.5",
 		"tslib": "^1.10.0",
 		"web-ext-types": "^3.2.1",
+		"webextension-polyfill": "^0.6.0",
 		"zone.js": "~0.10.2"
 	},
 	"devDependencies": {

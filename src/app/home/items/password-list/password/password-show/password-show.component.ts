@@ -31,10 +31,6 @@ export class PasswordShowComponent implements OnInit {
   }
 
   public extComplete(domain, login, pass) {
-	    sendWebExtMessage("complete", {domain: domain, login: login, pass: pass}, (res) => {
-		    if (res.success) {
-			    //alert("background script completed")
-		    }
-	    })
+	    sendWebExtMessage("complete", {domain: domain, login: login, pass: pass})
   }
 }
