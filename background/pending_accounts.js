@@ -35,6 +35,9 @@ const setup_pending_accounts_messages = () => {
   add_message_listener("delete_first_pending_account", delete_first_pending_account)
 }
 
+/* =====================================
+                TESTS
+===================================== */
 const pending_accounts_tests = async () => {
   let res = await browser.storage.local.get(['pending_accounts'])
   console.log(JSON.stringify(res))

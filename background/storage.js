@@ -15,6 +15,10 @@ const splice_storage_list = async (key, filter) => {
   return browser.storage.local.set({[key]: res[key]})
 }
 
+/* =====================================
+                TESTS
+===================================== */
+
 const storage_tests = async () => {
   let res = await browser.storage.local.get(['aled'])
   console.log(JSON.stringify(res))
