@@ -4,7 +4,8 @@
 	"scripts": {
 		"ng": "ng",
 		"start": "ng serve",
-		"build": "ng build --prod --aot=true --base-href ./",
+		"webpack": "webpack --config webpack.config.js",
+		"build": "yarn run webpack && ng build --prod --aot=true --base-href ./",
 		"test": "ng test",
 		"lint": "ng lint",
 		"e2e": "ng e2e"
@@ -31,6 +32,8 @@
 		"tslib": "^1.10.0",
 		"web-ext-types": "^3.2.1",
 		"webextension-polyfill": "^0.6.0",
+		"webpack": "^4.44.1",
+		"webpack-cli": "^3.3.12",
 		"zone.js": "~0.10.2"
 	},
 	"devDependencies": {

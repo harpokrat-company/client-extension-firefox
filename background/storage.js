@@ -7,6 +7,11 @@ const push_storage_list = async (key, elem) => {
 }
 
 
+const get_from_storage_list = async (key, filter) => {
+  let res = await browser.storage.local.get([key])
+  return res[res[key].indexOf(filter)]
+}
+
 // Takes a list from the extension's local storage, removes an element,
 // found using .indexOf(filter)
 const splice_storage_list = async (key, filter) => {

@@ -26,7 +26,15 @@
 	"content_scripts": [
 		{
 			"matches": ["http://*/*", "https://*/*", "file://*/*"],
-			"js": ["content_scripts/messaging.js"]
+			"js": [
+				"content_scripts/messaging.js",
+				"content_scripts/find_form.js",
+				"content_scripts/new_account.js",
+				"content_scripts/modal_dialog.js",
+				"content_scripts/confirm_pending_account.js",
+				"content_scripts/confirm_fill.js",
+				"content_scripts/confirm_pending_modification_account.js"
+			]
 		}
 	],
 	"permissions": ["activeTab", "storage", "tabs", "notifications", "*://harpokrat.com/*", "*://*.harpokrat.com/*"],

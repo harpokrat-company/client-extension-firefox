@@ -1,16 +1,24 @@
 
 const add_pending_account = async (params, sender) => {
+  console.log(JSON.stringify(params))
   let sender_url = new URL(sender.tab.url)
   if (sender_url.host == "") {
     sender_url = new URL("http://localhost")
   }
-  await push_storage_list('pending_accounts', {
-    name: sender_url.host + " - " + params.user,
-    user: params.user,  
-    pass: params.pass,   
-    domain: sender_url.host
-  })
-  console.log("added pending account: " + sender_url.host + " ; " + params.user + " ; " + params.pass)
+  let res = await find_account_for_domain({}, sender)
+  console.log(JSON.stringify(res))
+  if (res.success && res.account.user == params.user) {
+    console.log("aled_pending_modif")
+    await add_pending_modification_account(params, sender)
+  } else {
+    await push_storage_list('pending_accounts', {
+      name: sender_url.host + " - " + params.user,
+      user: params.user,  
+      pass: params.pass,   
+      domain: sender_url.host
+    })
+    console.log("added pending account: " + sender_url.host + " ; " + params.user + " ; " + params.pass)
+  }
   return {success: true}
 }
 
@@ -26,6 +34,8 @@ const is_account_pending = async (params, sender) => {
 
 const delete_first_pending_account = async (params, sender) => {
   await splice_storage_list('pending_accounts', {})
+  await send_all_tabs_message("close_pending_account_modal", {})
+  console.log("removed first pending account")
   return {success: true}
 }
 
