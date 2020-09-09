@@ -8,7 +8,8 @@ const add_pending_account = async (params, sender) => {
   let res = await find_account_for_domain({}, sender)
   console.log(JSON.stringify(res))
   if (res.success && res.account.user == params.user) {
-    console.log("aled_pending_modif")
+    if (res.account.pass == params.pass)
+      return {success: true}
     await add_pending_modification_account(params, sender)
   } else {
     await push_storage_list('pending_accounts', {

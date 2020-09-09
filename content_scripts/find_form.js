@@ -76,8 +76,12 @@ function find_form() {
   let curr_host = curr_url.hostname
   for (let [k, f] of finders) {
     if (curr_host == k || curr_host.search("." + k) != -1) {
-      let r = f()
-      return r
+      try {
+        let r = f()
+        return r
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
   return false

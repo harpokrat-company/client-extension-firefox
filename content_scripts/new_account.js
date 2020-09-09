@@ -3,7 +3,6 @@ function new_account() {
   let form = find_form()
   if (form) {
     form.submit.elem.addEventListener(form.submit.event, async () => {
-      console.log(JSON.stringify(form))
       let user_value = ""
       if (form.fields.user)
         user_value = form.fields.user.value

@@ -29,6 +29,7 @@ const is_account_pending_modification = async (params, sender) => {
 const delete_first_pending_modification_account = async (params, sender) => {
   await splice_storage_list('pending_modification_accounts', {})
   await send_all_tabs_message("close_pending_modification_account_modal", {})
+  await send_all_tabs_message("close_fill_form_modal", {})
   console.log("removed first pending_modification account")
   return {success: true}
 }
