@@ -18,7 +18,7 @@
 			"128": "assets/img/icon128.png"
 		},
 		"default_title": "Harpokrat",
-		"default_popup": "./dist/index.html"
+		"default_popup": "./popup.html"
 	},
 	"background": {
 		"page": "background/background.html"
