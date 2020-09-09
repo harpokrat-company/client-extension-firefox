@@ -5,7 +5,8 @@
 		"ng": "ng",
 		"start": "ng serve",
 		"webpack": "webpack --config webpack.config.js",
-		"build": "yarn run webpack && ng build --prod --aot=true --base-href ./",
+		"build2": "yarn run webpack && ng build --prod --aot=true --base-href ./",
+		"build": "webpack --config webpack.config.js",
 		"test": "ng test",
 		"lint": "ng lint",
 		"e2e": "ng e2e"
