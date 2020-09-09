@@ -28,6 +28,7 @@ const add_account_part = async (params, sender) => {
   return {success: true}
 }
 
+// params: {name: "", user: "", pass: "", domain: ""}
 const add_account = async (params, sender) => {
   console.log("added account: " + JSON.stringify(params))
   /*
