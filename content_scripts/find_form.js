@@ -9,16 +9,6 @@ function find_form_wikipedia () {
       user: form.querySelectorAll("input[id='wpName1']")[0],
       pass: form.querySelectorAll("input[id='wpPassword1']")[0]
     },
-    // fields: [
-    //   {
-    //     name: "user",
-    //     elem: form.querySelectorAll("input[id='wpName1']")[0]
-    //   },
-    //   {
-    //     name: "pass",
-    //     elem: form.querySelectorAll("input[id='wpPassword1']")[0]
-    //   }
-    // ]
     final: true
   }
 }
@@ -34,21 +24,25 @@ function find_form_fb () {
       user: form.querySelectorAll("input[id='email']")[0],
       pass: form.querySelectorAll("input[id='pass']")[0]
     },
-    // fields: [
-    //   {
-    //     name: "user",
-    //     elem: form.querySelectorAll("input[id='email']")[0]
-    //   },
-    //   {
-    //     name: "pass",
-    //     elem: form.querySelectorAll("input[id='pass']")[0]
-    //   }
-    // ]
     final: true
   }
 }
 
-/*
+/*  RIGHT NOW
+ * {
+ *    submit: {
+ *      elem: {},
+ *      event: ""
+ *    },
+ *    fields: {
+ *      user: {},
+ *      pass: {}
+ *    },
+ *    final: bool
+ * }
+ */
+
+/*  WHEN WE WILL WANT TO HAVE MORE FIELDS:
  * {
  *    submit: {
  *      elem: {},
@@ -62,8 +56,6 @@ function find_form_fb () {
  *    ],
  *    final: bool
  * }
- *
- *
  */
 
 function find_form() {
