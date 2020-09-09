@@ -4,6 +4,7 @@ const find_account_for_domain = async (params, sender) => {
   if (sender_url.host == "") {
     sender_url = new URL("http://localhost")
   }
+  // TEST PLACEHOLDER
   if (sender_url.host == "en.wikipedia.org") {
     return {success: true, account: {"name":"en.wikipedia.org - Aledoskour","user":"Aledoskour","pass":"adldjfhawd","domain":"en.wikipedia.org"}}
   }

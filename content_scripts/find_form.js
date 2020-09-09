@@ -42,7 +42,7 @@ function find_form_fb () {
  * }
  */
 
-/*  WHEN WE WILL WANT TO HAVE MORE FIELDS:
+/*  LATER VERSION, WHEN WE WILL WANT TO HAVE MORE FIELDS:
  * {
  *    submit: {
  *      elem: {},
