@@ -25,7 +25,11 @@
 	},
 	"content_scripts": [
 		{
-			"matches": ["http://*/*", "https://*/*", "file://*/*"],
+			"matches": [
+				"http://*/*",
+				"https://*/*",
+				"file://*/*"
+			],
 			"js": [
 				"content_scripts/messaging.js",
 				"content_scripts/find_form.js",
@@ -34,9 +38,17 @@
 				"content_scripts/confirm_pending_account.js",
 				"content_scripts/confirm_fill.js",
 				"content_scripts/confirm_pending_modification_account.js"
-			]
+			],
+			"run_at": "document_end"
 		}
 	],
-	"permissions": ["activeTab", "storage", "tabs", "notifications", "*://harpokrat.com/*", "*://*.harpokrat.com/*"],
+	"permissions": [
+		"activeTab",
+		"storage",
+		"tabs",
+		"notifications",
+		"*://harpokrat.com/*",
+		"*://*.harpokrat.com/*"
+	],
 	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }

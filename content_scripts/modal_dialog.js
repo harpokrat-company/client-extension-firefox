@@ -18,7 +18,7 @@ async function open_modal_dialog(content, actions, close_event) {
   let rand_id = Math.floor(Math.random() * 100000000)
   let modal = document.createElement("DIV")
   modal.id = "harpokratModal" + rand_id
-  modal.style = "display: block;position: fixed;z-index: 9999;left: 0;top: 0;width: 100%;height: 100%;overflow: auto;";
+  modal.style = "display: block;position: fixed;z-index: 999999;left: 0;top: 0;width: 100%;height: 100%;overflow: auto;";
 
   let modal_content = document.createElement("DIV")
   modal_content.style = "position: absolute;top: 4px;right: 4px;background-color: #fefefe;padding: 20px;width: 325px;-webkit-box-shadow: 0px 0px 1px 1px rgba(110,110,110,0.23);-moz-box-shadow: 0px 0px 1px 1px rgba(110,110,110,0.23);box-shadow: 0px 0px 1px 1px rgba(110,110,110,0.23);"
@@ -39,12 +39,12 @@ async function open_modal_dialog(content, actions, close_event) {
   mark.style = "font-family: 'Montserrat', sans-serif !important;display: inline-block; margin-left: 5px; float:right;"
   mark.textContent = "Harpokrat"
 
-  btn1.onclick = async function() {
+  btn1.onclick = async function () {
     modal.style.display = "none";
     await actions.button1()
   }
 
-  btn2.onclick = async function() {
+  btn2.onclick = async function () {
     modal.style.display = "none";
     await actions.button2()
   }

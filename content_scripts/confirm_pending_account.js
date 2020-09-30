@@ -1,6 +1,7 @@
 
 const look_for_pending_account = async () => {
   let res = await send_webext_message("is_account_pending")
+  console.log(JSON.stringify(res));
   if (res.success) {
     await open_modal_dialog({
       main_text: "Would you like to record this new account to you HPK Vault ?",
