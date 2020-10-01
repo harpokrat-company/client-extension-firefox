@@ -29,7 +29,6 @@ async function open_modal_dialog(content, actions, close_event) {
   overflow: auto;
   `
 
-
   let modal_content = document.createElement("DIV")
   modal_content.style = `
   position: absolute;
@@ -51,39 +50,57 @@ async function open_modal_dialog(content, actions, close_event) {
   let btn1 = document.createElement("BUTTON")
   btn1.style = `
   color: #fff;
+  border: 2px solid #38678f;
+  min-width: 100px;
   background-color: #38678f;
-  border-color: #28a745;
   font-weight: 400;
-  border: 1px solid transparent;
   padding: .375rem .75rem;
   font-size: 1rem;
   line-height: 1.5;
-  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   `
   btn1.textContent = content.button1_text
 
   let btn2 = document.createElement("BUTTON")
   btn2.style = `
-  color: #FFF;
-  border-color: #dc3545;
+  color: #000;
   font-weight: 400;
-  border: 1px solid transparent;
+  border: 2px solid #212529;
+  min-width: 100px;
   padding: .375rem .75rem;
   font-size: 1rem;
   line-height: 1.5;
   margin-left: 2px;
-  background-color: #212529;
+  background-color: #fefefe;
   `
   btn2.textContent = content.button2_text
+
+  let hr = document.createElement("div")
+  hr.style = `
+  border: 10px solid transparent;
+  `
+
+  let img = document.createElement("IMG")
+  img.src = "https://harpokrat.com/assets/img/hpk.svg"
+  img.style = `
+  max-width: 64px;
+  display: inline-block;
+  margin-left: 5px;
+  float:right;
+  `
 
   let mark = document.createElement("P")
   mark.style = `
   font-family: 'Montserrat', sans-serif !important;
   display: inline-block;
   margin-left: 5px;
+  font-size: 20px;
   float:right;
   `
   mark.textContent = "Harpokrat"
+
+  let markContainer = document.createElement("DIV")
+  markContainer.appendChild(img)
+  // modal_content.appendChild(mark)
 
   btn1.onclick = async function () {
     modal.style.display = "none";
@@ -95,10 +112,11 @@ async function open_modal_dialog(content, actions, close_event) {
     await actions.button2()
   }
 
+  modal_content.appendChild(markContainer)
   modal_content.appendChild(p)
+  modal_content.appendChild(hr)
   modal_content.appendChild(btn1)
   modal_content.appendChild(btn2)
-  modal_content.appendChild(mark)
   modal.appendChild(modal_content)
   document.body.appendChild(modal)
 
