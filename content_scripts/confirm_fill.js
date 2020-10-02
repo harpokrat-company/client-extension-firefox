@@ -5,7 +5,7 @@ const look_for_creds_to_fill = async () => {
     let form = find_form()
     if (form) {
       await open_modal_dialog({
-        main_text: "Would you like to fill this form with a recorded account from HPK ?",
+        main_text: "Would you like to fill this form with a recorded account from Harpokrat ?",
         button1_text: "Fill",
         button2_text: "Decline"
       }, {
