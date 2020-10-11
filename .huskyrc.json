@@ -1,6 +1,0 @@
-{
-    "hooks": {
-        "pre-commit": "yarn && yarn run lint  && yarn run build",
-        "pre-push": "yarn run build"
-    }
-}
