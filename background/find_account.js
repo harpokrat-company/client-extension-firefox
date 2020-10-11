@@ -6,7 +6,7 @@ const find_account_for_domain = async (params, sender) => {
   }
   // TEST PLACEHOLDER
   if (sender_url.host == "en.wikipedia.org") {
-    return { success: true, account: { "name": "en.wikipedia.org - Aledoskour", "user": "Aledoskour", "pass": "adldjfhawd", "domain": "en.wikipedia.org" } }
+    return { success: true, account: { "name": "en.wikipedia.org - Aledoskour", "user": "kapno.cc", "pass": "aledoskour", "domain": "en.wikipedia.org" } }
   }
   if (sender_url.host == "www.amazon.fr") {
     return { success: true, account: { "name": "en.wikipedia.org - Aledoskour", "user": "tanguy.gerome@gmail.com", "pass": "adldjfhawd", "domain": "amazon.fr" } }
