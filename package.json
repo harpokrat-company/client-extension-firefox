@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"scripts": {
 		"webpack": "webpack --config webpack.config.js",
-		"build.old": "yarn run webpack && ng build --prod --aot=true --base-href ./",
+		"build.old": "npm run webpack && ng build --prod --aot=true --base-href ./",
 		"build": "webpack --config webpack.config.js"
 	},
 	"private": true,
