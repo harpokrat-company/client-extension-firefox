@@ -37,4 +37,8 @@ const look_for_creds_to_fill = async () => {
   }
 }
 
-look_for_creds_to_fill()
+try {
+  look_for_creds_to_fill()
+} catch (e) {
+  console.error(e)
+}

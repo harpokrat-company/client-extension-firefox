@@ -19,4 +19,8 @@ const look_for_pending_account = async () => {
   }
 }
 
-look_for_pending_account()
+try {
+  look_for_pending_account()
+} catch (e) {
+  console.error(e)
+}

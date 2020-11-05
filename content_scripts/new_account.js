@@ -42,4 +42,8 @@ function setup_account_listener(form) {
   })
 }
 
-new_account()
+try {
+  new_account()
+} catch (e) {
+  console.error(e)
+}

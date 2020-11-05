@@ -18,4 +18,8 @@ const look_for_pending_modification_account = async () => {
   }
 }
 
-look_for_pending_modification_account()
+try {
+  look_for_pending_modification_account()
+} catch (e) {
+  console.error(e)
+}
