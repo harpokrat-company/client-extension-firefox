@@ -379,7 +379,7 @@ async function open_modal_login(action, close_event) {
 
   btn1.onclick = async function () {
     modal.style.display = "none";
-    await action({ user: input1.value, pass: input2.value }) // ========================
+    await action({ email: input1.value, password: input2.value })
   }
 
   btn2.onclick = async function () {
@@ -406,5 +406,7 @@ async function open_modal_login(action, close_event) {
 
 
 if (new URL(location.href).host == "") {
-  open_modal_login(console.log, "")
+  open_modal_login((cred) => {
+    send_webext_message("hpk_login", cred)
+  }, "")
 }
