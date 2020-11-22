@@ -1,19 +1,15 @@
 
-import { HarpokratApi, IPassword, ISecret, IHclSecret, IResourceIdentifier } from '@harpokrat/client';
+import { HarpokratApi, IResource, IToken, IPassword, ISecret, IHclSecret, IResourceIdentifier } from '@harpokrat/client';
 
 const ctx: Worker = self as any;
 
-const wasmUrl = 'https://static.harpokrat.com/hcl/hcl2.wasm';
-const apiUrl = 'https://api.harpokrat.com/v1/';
+const wasmUrl = 'https://static.harpokrat.com/hcl/hcl4.wasm';
+const apiUrl = 'https://api.dev.harpokrat.com/v1/';
 
 var client = new HarpokratApi({
     auth: {
-        email: 'aled@oskour.fi',
-        password: 'aledoskour'
-        // email: 'aled2@osko.ur',
-        // password: 'toto1234'
-        // email: 'pythonlib@osko.ur',
-        // password: 'testtest'
+        email: '',
+        password: ''
     },
     apiUrl: apiUrl,
     hclWasmUrl: wasmUrl,
@@ -21,19 +17,20 @@ var client = new HarpokratApi({
 });
 client.hcl.init();
 
+var current_token: IResource<IToken>;
+
 
 const login = async (email: string, password: string) => {
-    // client.auth = { email, password };
-    const token = await client.jsonWebTokens.create();
-    client.accessToken = token.attributes.token;
-    ctx.postMessage({ message: "debug", token: token.attributes.token });
-    var current_user_id = (token.relationships.user.data as IResourceIdentifier).id;
+    client.auth = { email, password };
+    current_token = await client.jsonWebTokens.create();
+    client.accessToken = current_token.attributes.token;
+    ctx.postMessage({ message: "debug", token: current_token.attributes.token });
+    var current_user_id = (current_token.relationships.user.data as IResourceIdentifier).id;
+    ctx.postMessage({ message: "login-response", token: current_token })
 
     var secrets = await client.secrets.readMany({
-        page: 1, // Page to read
-        size: 20, // Page size
-        // sort: 'content', // (optional) Property to sort by
-        // sortDescending: true, // (optional) Sort in ASC or DESC order
+        page: 1,
+        size: 20,
         filters: {
             'owner.id': current_user_id,
         }

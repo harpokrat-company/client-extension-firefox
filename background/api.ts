@@ -15,13 +15,16 @@ worker.addEventListener("message", (message: MessageEvent) => {
     }
 })
 
+function loginEventListener(message: MessageEvent) {
+    if (message.data.message == "login-response") {
+        console.log("LOGIN-RESPONSE: " + message.data.token);
+        worker.removeEventListener("message", loginEventListener)
+    }
+}
+
 const login = async (email: string, password: string) => {
     worker.postMessage({ message: "login", params: { email, password } });
-    worker.addEventListener("message", (message: MessageEvent) => {
-        if (message.data.message == "login-response") {
-            console.log("LOGIN-RESPONSE: " + message.data.params);
-        }
-    })
+    worker.addEventListener("message", loginEventListener);
 }
 
 const login_message_handler = async (params: any, sender: any) => {
