@@ -46,7 +46,7 @@ const login = async (email: string, password: string) => {
             var aled: IHclSecret = hclModule.Secret.Deserialize(client.auth.password, secret.attributes.content);
             ctx.postMessage({ message: "debug", secrettypename: aled.GetSecretTypeName() });
         } catch (e) {
-            ctx.postMessage({ message: "debug-error", err: JSON.stringify(e) });
+            ctx.postMessage({ message: "debug-error", err: e.message, stack: e.stack });
         }
     });
 
