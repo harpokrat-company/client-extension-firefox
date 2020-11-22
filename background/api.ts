@@ -15,23 +15,42 @@ worker.addEventListener("message", (message: MessageEvent) => {
     }
 })
 
-function loginEventListener(message: MessageEvent) {
-    if (message.data.message == "login-response") {
-        console.log("LOGIN-RESPONSE: " + message.data.token);
-        worker.removeEventListener("message", loginEventListener)
-    }
-}
 
-const login = async (email: string, password: string) => {
-    worker.postMessage({ message: "login", params: { email, password } });
-    worker.addEventListener("message", loginEventListener);
+const login = (email: string, password: string) => {
+    return new Promise((resolve, reject) => {
+        worker.postMessage({ message: "login", params: { email, password } });
+        function loginEventListener(message: MessageEvent) {
+            if (message.data.message == "login-response") {
+                console.log("LOGIN-RESPONSE: " + JSON.stringify(message.data.token));
+                worker.removeEventListener("message", loginEventListener)
+                resolve(message.data.token)
+            }
+        }
+        worker.addEventListener("message", loginEventListener);
+    })
 }
 
 const login_message_handler = async (params: any, sender: any) => {
-    login(params.email, params.password);
+    await login(params.email, params.password);
     return { success: true }
 }
 
-login("aled@oskour.fi", "aledoskour");
+const getAllUserPasswords = () => {
+    return new Promise((resolve, reject) => {
+        worker.postMessage({ message: "getAllUserPasswords" });
+        function loginEventListener(message: MessageEvent) {
+            if (message.data.message == "getAllUserPasswords-response") {
+                console.log("GETALLUSERPASSWORDS-RESPONSE: " + JSON.stringify(message.data.passwords));
+                worker.removeEventListener("message", loginEventListener)
+                resolve(message.data.passwords)
+            }
+        }
+        worker.addEventListener("message", loginEventListener);
+    })
+}
+
+login("tanguypd@lol.xd", "tanguypd@lol.xd").then((_) => {
+    getAllUserPasswords()
+});
 
 add_message_listener("hpk_login", login_message_handler)
