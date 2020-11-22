@@ -2,6 +2,7 @@
 
 # WebExt files
 background/api.bundled.js
+background/api.bundled.worker.js
 
 # compiled output
 /dist
