@@ -26,8 +26,7 @@ const login = async (email: string, password: string) => {
     // client.auth = { email, password };
     const token = await client.jsonWebTokens.create();
     client.accessToken = token.attributes.token;
-    // console.log(token.attributes.token);
-    ctx.postMessage(token.attributes.token);
+    ctx.postMessage({ message: "debug", token: token.attributes.token });
     var current_user_id = (token.relationships.user.data as IResourceIdentifier).id;
 
     var secrets = await client.secrets.readMany({
@@ -39,23 +38,22 @@ const login = async (email: string, password: string) => {
             'owner.id': current_user_id,
         }
     });
-    console.log(secrets);
+    ctx.postMessage({ message: "debug", secrets: secrets });
     var hclModule = await client.hcl.getModule();
     secrets.forEach(secret => {
-        console.log(hclModule);
-        console.log(secret.attributes.content);
+        ctx.postMessage({ message: "debug", content: secret.attributes.content });
         try {
             var aled: IHclSecret = hclModule.Secret.Deserialize(client.auth.password, secret.attributes.content);
-            console.log(aled.GetSecretTypeName());
+            ctx.postMessage({ message: "debug", secrettypename: aled.GetSecretTypeName() });
         } catch (e) {
-            console.error(e);
+            ctx.postMessage({ message: "debug-error", err: JSON.stringify(e) });
         }
     });
 
 }
 
 ctx.onmessage = (ev: MessageEvent) => {
-    ctx.postMessage("ALED FROM WEBWORKER")
+    ctx.postMessage({ message: "debug", aled: "HELLO FROM WEBWORKER" });
     if (ev.data.message == "login") {
         login(ev.data.params.email, ev.data.params.password);
     }

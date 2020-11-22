@@ -5,12 +5,23 @@ var worker = new ApiWorker();
 console.log(worker);
 
 
-worker.onmessage = (message) => {
-    console.log(message);
-}
+worker.addEventListener("message", (message: MessageEvent) => {
+    if (message.data.message == "debug") {
+        console.log(message.data);
+    } else if (message.data.message == "debug-error") {
+        console.log(message.data);
+    } else {
+        console.log(message);
+    }
+})
 
 const login = async (email: string, password: string) => {
     worker.postMessage({ message: "login", params: { email, password } });
+    worker.addEventListener("message", (message: MessageEvent) => {
+        if (message.data.message == "login-response") {
+            console.log("LOGIN-RESPONSE: " + message.data.params);
+        }
+    })
 }
 
 const login_message_handler = async (params: any, sender: any) => {
