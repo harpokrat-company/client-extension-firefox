@@ -1,6 +1,6 @@
 
 import { add_message_listener, send_all_tabs_message } from './messaging'
-import { find_account_for_domain } from './find_account'
+import { find_accounts_for_domain } from './find_account'
 import { splice_storage_list, push_storage_list } from './storage'
 import { add_pending_modification_account } from './pending_modification_accounts'
 
@@ -10,20 +10,31 @@ export const add_pending_account = async (params: any, sender: any) => {
   if (sender_url.host == "") {
     sender_url = new URL("http://localhost")
   }
-  let res = await find_account_for_domain({}, sender)
+  let res = await find_accounts_for_domain({}, sender)
   console.log(JSON.stringify(res))
-  if (res.success && res.account.user == params.user) {
-    if (res.account.pass == params.pass)
-      return { success: true }
-    await add_pending_modification_account(params, sender)
-  } else {
-    await push_storage_list('pending_accounts', {
-      name: sender_url.host + " - " + params.user,
-      user: params.user,
-      pass: params.pass,
-      domain: sender_url.host
-    })
-    console.log("added pending account: " + sender_url.host + " ; " + params.user + " ; " + params.pass)
+  if (res.success) {
+    let found_username = false;
+    for (let account in res.accounts) {
+      let acc = account as any;
+      console.log(acc);
+      if (acc.username == params.user) {
+        found_username = true;
+        if (acc.password == params.pass) {
+          return { success: true };
+        }
+      }
+    }
+    if (found_username) {
+      await add_pending_modification_account(params, sender)
+    } else {
+      await push_storage_list('pending_accounts', {
+        name: sender_url.host + " - " + params.user,
+        user: params.user,
+        pass: params.pass,
+        domain: sender_url.host
+      })
+      console.log("added pending account: " + sender_url.host + " ; " + params.user + " ; " + params.pass)
+    }
   }
   return { success: true }
 }

@@ -4,6 +4,7 @@ const look_for_creds_to_fill = async () => {
   if (res.success) {
     let form = find_form()
     if (form) {
+      return;
       open_modal_list({
         main_text: "Would you like to fill this form with a recorded account from Harpokrat ?",
         button_texts: ["aled@oskour.fi", "awd@awd.fi", "tanguy.gerome@gmail.com"]

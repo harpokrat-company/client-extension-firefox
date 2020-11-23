@@ -40,14 +40,28 @@ const login_message_handler = async (params: any, sender: any) => {
 export const getAllUserPasswords = () => {
     return new Promise((resolve, reject) => {
         worker.postMessage({ message: "getAllUserPasswords" });
-        function loginEventListener(message: MessageEvent) {
+        function getAllPasswordsEventListener(message: MessageEvent) {
             if (message.data.message == "getAllUserPasswords-response") {
                 console.log("GETALLUSERPASSWORDS-RESPONSE: " + JSON.stringify(message.data.passwords));
-                worker.removeEventListener("message", loginEventListener)
+                worker.removeEventListener("message", getAllPasswordsEventListener)
                 resolve(message.data.passwords)
             }
         }
-        worker.addEventListener("message", loginEventListener);
+        worker.addEventListener("message", getAllPasswordsEventListener);
+    })
+}
+
+export const addAccount = (account: any) => {
+    return new Promise((resolve, reject) => {
+        worker.postMessage({ message: "addPassword", params: account });
+        function addPasswordEventListener(message: MessageEvent) {
+            if (message.data.message == "addPassword-response") {
+                console.log("ADDPASSWORD-RESPONSE: " + JSON.stringify(message.data.success));
+                worker.removeEventListener("message", addPasswordEventListener)
+                resolve(message.data.passwords)
+            }
+        }
+        worker.addEventListener("message", addPasswordEventListener);
     })
 }
 

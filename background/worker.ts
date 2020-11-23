@@ -26,8 +26,6 @@ const login = async (email: string, password: string) => {
     client.accessToken = current_token.attributes.token;
     ctx.postMessage({ message: "debug", token: current_token.attributes.token });
     ctx.postMessage({ message: "login-response", token: current_token })
-
-
 }
 
 const getAllUserPasswords = async () => {
@@ -40,25 +38,25 @@ const getAllUserPasswords = async () => {
         page: 1,
         size: 20,
     })
-    ctx.postMessage({ message: "debug", vaults });
+    // ctx.postMessage({ message: "debug", vaults });
     for (const vault of vaults) {
         var secrets = await client.vaults.resource(vault.id, 'secrets').readMany({
             page: 1,
             size: 200,
         })
-        ctx.postMessage({ message: "debug", secrets });
+        // ctx.postMessage({ message: "debug", secrets });
         for (const secret of secrets) {
             try {
                 var aled: IHclSecret = hclModule.Secret.Deserialize("", secret.attributes.content);
                 var password = hclModule.CastSecretToPassword(aled);
-                ctx.postMessage({
-                    message: "debug",
-                    secrettypename: password.GetSecretTypeName(),
-                    name: password.GetName(),
-                    domain: password.GetDomain(),
-                    username: password.GetLogin(),
-                    password: password.GetPassword(),
-                });
+                // ctx.postMessage({
+                //     message: "debug",
+                //     secrettypename: password.GetSecretTypeName(),
+                //     name: password.GetName(),
+                //     domain: password.GetDomain(),
+                //     username: password.GetLogin(),
+                //     password: password.GetPassword(),
+                // });
                 passwords.push({
                     name: password.GetName(),
                     domain: password.GetDomain(),
@@ -73,12 +71,56 @@ const getAllUserPasswords = async () => {
     ctx.postMessage({ message: "getAllUserPasswords-response", passwords });
 }
 
+const addPassword = async (account: any) => {
+    var current_user_id = (current_token.relationships.user.data as IResourceIdentifier).id;
+
+    ctx.postMessage({ message: "debug", aled: "ALED-ADDPASSWORD" });
+
+    var hclModule = await client.hcl.getModule();
+    var vaults = await client.users.resource(current_user_id, 'vaults').readMany({
+        page: 1,
+        size: 20,
+    })
+    ctx.postMessage({ message: "debug", vaults });
+
+    if (vaults.length != 0) {
+        let vault = vaults[0];
+
+        var secrets_resource = client.vaults.resource(vault.id, 'secrets');
+        let s = new hclModule.Password();
+        s.InitializePlainCipher();
+        s.SetName(account.name);
+        s.SetDomain(account.domain);
+        s.SetLogin(account.username);
+        s.SetPassword(account.password);
+        const serialized = s.Serialize('');
+
+        try {
+            let aled = await client.secrets.create({
+                attributes: {
+
+                    content: serialized,
+                    private: true,
+                },
+                type: 'secrets',
+                relationships: { owner: { data: vault } }
+            })
+        } catch (e) {
+            ctx.postMessage({ message: "debug-error", err: e.message, stack: e.stack });
+        }
+    }
+    ctx.postMessage({ message: "addPassword-response", success: true });
+}
+
 ctx.onmessage = (ev: MessageEvent) => {
-    ctx.postMessage({ message: "debug", aled: "HELLO FROM WEBWORKER" });
+    // ctx.postMessage({ message: "debug", aled: "HELLO FROM WEBWORKER" });
     if (ev.data.message == "login") {
         login(ev.data.params.email, ev.data.params.password);
     }
     if (ev.data.message == "getAllUserPasswords") {
         getAllUserPasswords();
+    }
+    if (ev.data.message == "addPassword") {
+        addPassword(ev.data.params);
     }
 }

@@ -2,6 +2,7 @@
 import { add_message_listener } from './messaging'
 import { push_storage_list, get_from_storage_list } from './storage'
 import { add_pending_account } from './pending_accounts'
+import { addAccount } from './api'
 
 export const add_account_part = async (params: any, sender: any) => {
   let sender_url = new URL(sender.tab.url)
@@ -36,11 +37,12 @@ export const add_account_part = async (params: any, sender: any) => {
 // params: {name: "", user: "", pass: "", domain: ""}
 export const add_account = async (params: any, sender: any) => {
   console.log("added account: " + JSON.stringify(params))
-  /*
-   * =============================
-   *    send to API
-   * =============================
-   */
+  await addAccount({
+    name: params.name,
+    domain: params.domain,
+    username: params.user,
+    password: params.pass,
+  })
   return { success: true }
 }
 

@@ -1,6 +1,6 @@
 
 import { add_message_listener, send_all_tabs_message } from './messaging'
-import { find_account_for_domain } from './find_account'
+// import { find_accounts_for_domain } from './find_account'
 import { splice_storage_list, push_storage_list } from './storage'
 
 export const add_pending_modification_account = async (params: any, sender: any) => {
@@ -9,7 +9,7 @@ export const add_pending_modification_account = async (params: any, sender: any)
   if (sender_url.host == "") {
     sender_url = new URL("http://localhost")
   }
-  let res = await find_account_for_domain({}, sender)
+  // let res = await find_accounts_for_domain({}, sender)
   await push_storage_list('pending_modification_accounts', {
     name: sender_url.host + " - " + params.user,
     user: params.user,
