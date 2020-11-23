@@ -49,7 +49,7 @@ const getAllUserPasswords = () => {
     })
 }
 
-login("tanguypd@lol.xd", "tanguypd@lol.xd").then((_) => {
+login("aled@oskour.fi", "aledoskour").then((_) => {
     getAllUserPasswords()
 });
 

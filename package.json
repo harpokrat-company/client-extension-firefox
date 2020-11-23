@@ -8,7 +8,7 @@
 	},
 	"private": true,
 	"dependencies": {
-		"@harpokrat/client": "^0.3.4",
+		"@harpokrat/client": "^0.3.5",
 		"@harpokrat/hcl": "0.1.23",
 		"ts-loader": "^8.0.11",
 		"typescript": "^4.0.5",
