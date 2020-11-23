@@ -17,8 +17,22 @@ worker.addEventListener("message", (message: MessageEvent) => {
     }
 })
 
+var jwtInterval: any = undefined;
 
 export const login = (email: string, password: string) => {
+    if (jwtInterval != undefined) {
+        clearInterval(jwtInterval)
+    }
+    jwtInterval = setInterval(() => {
+        worker.postMessage({ message: "login", params: { email, password } });
+        function loginEventListener(message: MessageEvent) {
+            if (message.data.message == "login-response") {
+                console.log("INTERVAL-LOGIN-RESPONSE: " + JSON.stringify(message.data.token));
+                worker.removeEventListener("message", loginEventListener)
+            }
+        }
+        worker.addEventListener("message", loginEventListener);
+    }, 10 * 60 * 1000)
     return new Promise((resolve, reject) => {
         worker.postMessage({ message: "login", params: { email, password } });
         function loginEventListener(message: MessageEvent) {

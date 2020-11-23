@@ -404,6 +404,8 @@ async function open_modal_login(action, close_event) {
   })
 }
 
+// ===========================
+// ADD LOGIN MESSAGE HANDLER
 
 // if (new URL(location.href).host == "") {
 //   open_modal_login((cred) => {
