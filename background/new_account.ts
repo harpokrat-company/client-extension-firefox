@@ -1,5 +1,9 @@
 
-const add_account_part = async (params, sender) => {
+import { add_message_listener } from './messaging'
+import { push_storage_list, get_from_storage_list } from './storage'
+import { add_pending_account } from './pending_accounts'
+
+export const add_account_part = async (params: any, sender: any) => {
   let sender_url = new URL(sender.tab.url)
   if (sender_url.host == "") {
     sender_url = new URL("http://localhost")
@@ -30,7 +34,7 @@ const add_account_part = async (params, sender) => {
 }
 
 // params: {name: "", user: "", pass: "", domain: ""}
-const add_account = async (params, sender) => {
+export const add_account = async (params: any, sender: any) => {
   console.log("added account: " + JSON.stringify(params))
   /*
    * =============================
@@ -40,7 +44,7 @@ const add_account = async (params, sender) => {
   return { success: true }
 }
 
-function setup_new_account() {
+export function setup_new_account() {
   add_message_listener("add_account", add_account)
   add_message_listener("add_account_part", add_account_part)
 }

@@ -21,7 +21,9 @@
 		"default_popup": "./popup.html"
 	},
 	"background": {
-		"page": "background/background.html"
+		"scripts": [
+			"background/background.bundled.js"
+		]
 	},
 	"content_scripts": [
 		{

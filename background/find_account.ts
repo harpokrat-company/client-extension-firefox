@@ -1,5 +1,7 @@
 
-const find_account_for_domain = async (params, sender) => {
+import { add_message_listener } from './messaging'
+
+export const find_account_for_domain = async (params: any, sender: any) => {
   let sender_url = new URL(sender.tab.url)
   if (sender_url.host == "") {
     sender_url = new URL("http://localhost")
@@ -19,6 +21,6 @@ const find_account_for_domain = async (params, sender) => {
   return { success: false }
 }
 
-function setup_find_account() {
+export function setup_find_account() {
   add_message_listener("find_account_for_domain", find_account_for_domain)
 }

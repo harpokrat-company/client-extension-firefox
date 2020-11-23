@@ -1,5 +1,8 @@
 
-const run_tests = async () => {
+import { storage_tests } from './storage'
+import { pending_accounts_tests } from './pending_accounts'
+
+export const run_tests = async () => {
   console.log("=================================================")
   console.log("STARTING TESTS")
   console.log("=================================================")

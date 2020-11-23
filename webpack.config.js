@@ -1,13 +1,13 @@
 const path = require('path');
 
 module.exports = {
-  entry: './background/api.ts',
+  entry: './background/background.ts',
   mode: 'development',
   devtool: "inline-source-map",
   target: 'web',
   output: {
     publicPath: "/background/",
-    filename: 'api.bundled.js',
+    filename: 'background.bundled.js',
     path: path.resolve(__dirname, 'background/'),
   },
   module: {

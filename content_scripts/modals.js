@@ -405,8 +405,8 @@ async function open_modal_login(action, close_event) {
 }
 
 
-if (new URL(location.href).host == "") {
-  open_modal_login((cred) => {
-    send_webext_message("hpk_login", cred)
-  }, "")
-}
+// if (new URL(location.href).host == "") {
+//   open_modal_login((cred) => {
+//     send_webext_message("hpk_login", cred)
+//   }, "")
+// }
