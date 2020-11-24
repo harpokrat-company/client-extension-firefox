@@ -59,7 +59,7 @@ export const getAllUserPasswords = () => {
         worker.postMessage({ message: "getAllUserPasswords" });
         function getAllPasswordsEventListener(message: MessageEvent) {
             if (message.data.message == "getAllUserPasswords-response") {
-                console.log("GETALLUSERPASSWORDS-RESPONSE: " + JSON.stringify(message.data.passwords));
+                // console.log("GETALLUSERPASSWORDS-RESPONSE: " + JSON.stringify(message.data.passwords));
                 worker.removeEventListener("message", getAllPasswordsEventListener)
                 resolve(message.data.passwords)
             }
@@ -73,12 +73,26 @@ export const addAccount = (account: any) => {
         worker.postMessage({ message: "addPassword", params: account });
         function addPasswordEventListener(message: MessageEvent) {
             if (message.data.message == "addPassword-response") {
-                console.log("ADDPASSWORD-RESPONSE: " + JSON.stringify(message.data.success));
+                // console.log("ADDPASSWORD-RESPONSE: " + JSON.stringify(message.data.success));
                 worker.removeEventListener("message", addPasswordEventListener)
                 resolve(message.data.passwords)
             }
         }
         worker.addEventListener("message", addPasswordEventListener);
+    })
+}
+
+export const modifyAccount = (account: any) => {
+    return new Promise((resolve, reject) => {
+        worker.postMessage({ message: "modifyPassword", params: account });
+        function modifyPasswordEventListener(message: MessageEvent) {
+            if (message.data.message == "modifyPassword-response") {
+                // console.log("MODIFYPASSWORD-RESPONSE: " + JSON.stringify(message.data.success));
+                worker.removeEventListener("message", modifyPasswordEventListener)
+                resolve(message.data.passwords)
+            }
+        }
+        worker.addEventListener("message", modifyPasswordEventListener);
     })
 }
 

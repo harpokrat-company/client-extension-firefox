@@ -9,7 +9,7 @@ export const add_account_part = async (params: any, sender: any) => {
   if (sender_url.host == "") {
     sender_url = new URL("http://localhost")
   }
-  console.log(JSON.stringify(params))
+  // console.log(JSON.stringify(params))
   if (params.fields.user !== "" && params.fields.pass !== "") {
     await add_pending_account({ user: params.fields.user, pass: params.fields.pass }, sender)
   } else {
@@ -20,7 +20,7 @@ export const add_account_part = async (params: any, sender: any) => {
         new_acc.user = params.user
       if (params.pass != "")
         new_acc.pass = params.pass
-      console.log({ user: new_acc.user, pass: new_acc.pass }, sender);
+      // console.log({ user: new_acc.user, pass: new_acc.pass }, sender);
       await add_pending_account({ user: new_acc.user, pass: new_acc.pass }, sender)
     } else {
       await push_storage_list('account_parts', {
@@ -36,7 +36,7 @@ export const add_account_part = async (params: any, sender: any) => {
 
 // params: {name: "", user: "", pass: "", domain: ""}
 export const add_account = async (params: any, sender: any) => {
-  console.log("added account: " + JSON.stringify(params))
+  // console.log("added account: " + JSON.stringify(params))
   await addAccount({
     name: params.name,
     domain: params.domain,

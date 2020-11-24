@@ -4,19 +4,14 @@ import { add_message_listener, send_all_tabs_message } from './messaging'
 import { splice_storage_list, push_storage_list } from './storage'
 
 export const add_pending_modification_account = async (params: any, sender: any) => {
-  console.log(JSON.stringify(params))
+  // console.log(JSON.stringify(params))
   let sender_url = new URL(sender.tab.url)
   if (sender_url.host == "") {
     sender_url = new URL("http://localhost")
   }
   // let res = await find_accounts_for_domain({}, sender)
-  await push_storage_list('pending_modification_accounts', {
-    name: sender_url.host + " - " + params.user,
-    user: params.user,
-    pass: params.pass,
-    domain: sender_url.host
-  })
-  console.log("added pending_modification account: " + sender_url.host + " ; " + params.user + " ; " + params.pass)
+  await push_storage_list('pending_modification_accounts', params)
+  // console.log("added pending_modification account: " + sender_url.host + " ; " + params.username + " ; " + params.password)
   return { success: true }
 }
 
@@ -34,7 +29,7 @@ export const delete_first_pending_modification_account = async (params: any, sen
   await splice_storage_list('pending_modification_accounts', {})
   await send_all_tabs_message("close_pending_modification_account_modal", {})
   await send_all_tabs_message("close_fill_form_modal", {})
-  console.log("removed first pending_modification account")
+  // console.log("removed first pending_modification account")
   return { success: true }
 }
 

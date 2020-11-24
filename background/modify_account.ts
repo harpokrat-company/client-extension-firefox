@@ -1,14 +1,11 @@
 
 import { add_message_listener } from './messaging'
-import { } from './api'
+import { modifyAccount } from './api'
 
 const modify_account = async (params: any, sender: any) => {
-  console.log("modified account: " + JSON.stringify(params))
-  /*
-   * =============================
-   *    send to API
-   * =============================
-   */
+  // console.log("modified account: " + JSON.stringify(params))
+  let res = await modifyAccount(params);
+
   return { success: true }
 }
 

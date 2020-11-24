@@ -3,7 +3,7 @@
 export const send_current_tab_message = async (message_type: string, params: any) => {
   let id = Math.floor(Math.random() * 100000000)
   let request = { id: id, message_type: message_type, params: params }
-  console.log(JSON.stringify(request))
+  // console.log(JSON.stringify(request))
   let tabs = await browser.tabs.query({ active: true, currentWindow: true })
   return browser.tabs.sendMessage(tabs[0].id, request)
 }
@@ -12,13 +12,13 @@ export const send_current_tab_message = async (message_type: string, params: any
 export const send_all_tabs_message = async (message_type: string, params: any) => {
   let id = Math.floor(Math.random() * 100000000)
   let request = { id: id, message_type: message_type, params: params }
-  console.log(JSON.stringify(request))
+  // console.log(JSON.stringify(request))
   let tabs = await browser.tabs.query({})
   tabs.forEach(async (tab) => {
     try {
       await browser.tabs.sendMessage(tab.id, request)
     } catch (error) {
-      console.log(error)
+      // console.log(error)
     }
   })
 }

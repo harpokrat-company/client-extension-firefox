@@ -36,7 +36,7 @@ const getAllUserPasswords = async () => {
     var hclModule = await client.hcl.getModule();
     var vaults = await client.users.resource(current_user_id, 'vaults').readMany({
         page: 1,
-        size: 20,
+        size: 100,
     })
     // ctx.postMessage({ message: "debug", vaults });
     for (const vault of vaults) {
@@ -58,6 +58,7 @@ const getAllUserPasswords = async () => {
                 //     password: password.GetPassword(),
                 // });
                 passwords.push({
+                    secret: secret,
                     name: password.GetName(),
                     domain: password.GetDomain(),
                     username: password.GetLogin(),
@@ -74,14 +75,11 @@ const getAllUserPasswords = async () => {
 const addPassword = async (account: any) => {
     var current_user_id = (current_token.relationships.user.data as IResourceIdentifier).id;
 
-    ctx.postMessage({ message: "debug", aled: "ALED-ADDPASSWORD" });
-
     var hclModule = await client.hcl.getModule();
     var vaults = await client.users.resource(current_user_id, 'vaults').readMany({
         page: 1,
-        size: 20,
+        size: 100,
     })
-    ctx.postMessage({ message: "debug", vaults });
 
     if (vaults.length != 0) {
         let vault = vaults[0];
@@ -112,6 +110,43 @@ const addPassword = async (account: any) => {
     ctx.postMessage({ message: "addPassword-response", success: true });
 }
 
+const modifyPassword = async (account: any) => {
+    var current_user_id = (current_token.relationships.user.data as IResourceIdentifier).id;
+
+    var hclModule = await client.hcl.getModule();
+    var vaults = await client.users.resource(current_user_id, 'vaults').readMany({
+        page: 1,
+        size: 100,
+    })
+
+    if (vaults.length != 0) {
+        let vault = vaults[0];
+
+        var secrets_resource = client.vaults.resource(vault.id, 'secrets');
+        let s = new hclModule.Password();
+        s.InitializePlainCipher();
+        s.SetName(account.name);
+        s.SetDomain(account.domain);
+        s.SetLogin(account.username);
+        s.SetPassword(account.password);
+        const serialized = s.Serialize('');
+
+        try {
+            ctx.postMessage({ message: "debug", aled: "ALED OSKOUR" });
+            let aled = await client.secrets.update(account.secret.id, {
+                ...account.secret,
+                attributes: {
+                    content: serialized,
+                },
+                relationships: undefined,
+            })
+        } catch (e) {
+            ctx.postMessage({ message: "debug-error", err: e.message, stack: e.stack });
+        }
+    }
+    ctx.postMessage({ message: "modifyPassword-response", success: true });
+}
+
 ctx.onmessage = async (ev: MessageEvent) => {
     // ctx.postMessage({ message: "debug", aled: "HELLO FROM WEBWORKER" });
     try {
@@ -123,6 +158,9 @@ ctx.onmessage = async (ev: MessageEvent) => {
         }
         if (ev.data.message == "addPassword") {
             await addPassword(ev.data.params);
+        }
+        if (ev.data.message == "modifyPassword") {
+            await modifyPassword(ev.data.params);
         }
     } catch (e) {
         ctx.postMessage({

@@ -18,7 +18,6 @@ export const find_accounts_for_domain = async (params: any, sender: any) => {
   }
 
   if (accounts.length > 0) {
-
     return { success: true, accounts: matchedAccounts }
   }
   return { success: false }
