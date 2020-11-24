@@ -15,7 +15,7 @@ jobs:
         run: |
           npm config set @harpokrat:registry https://${{ secrets.NPM_REGISTRY }}/
           npm config set //${{ secrets.NPM_REGISTRY }}/:_authToken ${{ secrets.NPM_AUTH_TOKEN }}
-          yarn
+          npm install
       - name: Build package
         run: |
-          yarn run build
+          npm run build
