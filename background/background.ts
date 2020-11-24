@@ -18,9 +18,9 @@ browser.runtime.onInstalled.addListener(async function ({ reason, temporary }: a
   setup_pending_accounts_messages()
   setup_pending_modification_accounts_messages()
 
-  login("aled@oskour.fi", "aledoskour").then((_) => {
-    getAllUserPasswords()
-  });
+  // login("aled@oskour.fi", "aledoskour").then((_) => {
+  //   getAllUserPasswords()
+  // });
 
   if (temporary) {
     run_tests()

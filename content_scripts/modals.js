@@ -237,7 +237,7 @@ async function open_modal_list(content, action, close_event) {
 
     btn1.onclick = async function () {
       modal.style.display = "none";
-      await action(text)
+      await action(btn1.textContent)
     }
 
     modal_content.appendChild(btn1)
@@ -401,14 +401,16 @@ async function open_modal_login(action, close_event) {
 
   add_message_listener(close_event, () => {
     modal.style.display = "none";
+    look_for_creds_to_fill()
   })
 }
 
 // ===========================
-// ADD LOGIN MESSAGE HANDLER
+// LOGIN MESSAGE HANDLING
+const ask_login_handler = async (params, sender) => {
+  open_modal_login((cred) => {
+    send_webext_message("hpk_login", cred)
+  }, "closeAllLogins")
+}
 
-// if (new URL(location.href).host == "") {
-//   open_modal_login((cred) => {
-//     send_webext_message("hpk_login", cred)
-//   }, "")
-// }
+add_message_listener("askLogin", ask_login_handler)

@@ -1,6 +1,6 @@
 
 import ApiWorker from "worker-loader!./worker";
-// import { add_message_listener } from './messaging';
+import { add_message_listener, send_all_tabs_message } from './messaging';
 
 
 var worker = new ApiWorker();
@@ -12,6 +12,8 @@ worker.addEventListener("message", (message: MessageEvent) => {
         console.log(message.data);
     } else if (message.data.message == "debug-error") {
         console.log(message.data);
+    } else if (message.data.message == "workerException") {
+        send_all_tabs_message("askLogin", {})
     } else {
         console.log(message);
     }
@@ -48,6 +50,7 @@ export const login = (email: string, password: string) => {
 
 const login_message_handler = async (params: any, sender: any) => {
     await login(params.email, params.password);
+    send_all_tabs_message("closeAllLogins", {});
     return { success: true }
 }
 
@@ -79,4 +82,4 @@ export const addAccount = (account: any) => {
     })
 }
 
-// add_message_listener("hpk_login", login_message_handler)
+add_message_listener("hpk_login", login_message_handler)

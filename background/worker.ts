@@ -112,15 +112,21 @@ const addPassword = async (account: any) => {
     ctx.postMessage({ message: "addPassword-response", success: true });
 }
 
-ctx.onmessage = (ev: MessageEvent) => {
+ctx.onmessage = async (ev: MessageEvent) => {
     // ctx.postMessage({ message: "debug", aled: "HELLO FROM WEBWORKER" });
-    if (ev.data.message == "login") {
-        login(ev.data.params.email, ev.data.params.password);
-    }
-    if (ev.data.message == "getAllUserPasswords") {
-        getAllUserPasswords();
-    }
-    if (ev.data.message == "addPassword") {
-        addPassword(ev.data.params);
+    try {
+        if (ev.data.message == "login") {
+            await login(ev.data.params.email, ev.data.params.password);
+        }
+        if (ev.data.message == "getAllUserPasswords") {
+            await getAllUserPasswords();
+        }
+        if (ev.data.message == "addPassword") {
+            await addPassword(ev.data.params);
+        }
+    } catch (e) {
+        ctx.postMessage({
+            message: "workerException", err: e.message, stack: e.stack
+        })
     }
 }
